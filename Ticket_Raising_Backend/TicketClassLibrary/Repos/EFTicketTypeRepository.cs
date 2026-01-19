@@ -37,9 +37,8 @@ public class EFTicketTypeRepository : ITicketTypeRepository
 
         try
         {
-            ticketTypeToEdit.TicketTypeName = ticketType.TicketTypeName;
-            ticketTypeToEdit.PriorityId = ticketType.PriorityId;
-            ticketTypeToEdit.Price = ticketType.Price;
+            ticketTypeToEdit.TypeName = ticketType.TypeName;
+            ticketTypeToEdit.PriorityId = ticketType.PriorityId;           
             ticketTypeToEdit.Description = ticketType.Description;
 
             await ticketDbContext.SaveChangesAsync();
@@ -53,8 +52,7 @@ public class EFTicketTypeRepository : ITicketTypeRepository
 
     public async Task DeleteTicketTypeAsync(string ticketTypeId)
     {
-        TicketType ticketTypeToDelete =
-            await ticketDbContext.TicketTypes
+        TicketType ticketTypeToDelete = await ticketDbContext.TicketTypes
                 .Include("Tickets")
                 .FirstOrDefaultAsync(ticketTypeEntity => ticketTypeEntity.TicketTypeId == ticketTypeId);
 
