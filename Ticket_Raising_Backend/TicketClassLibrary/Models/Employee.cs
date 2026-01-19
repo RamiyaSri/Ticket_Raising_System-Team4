@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace TicketClassLibrary.Models;
 
@@ -8,39 +9,39 @@ public class Employee
 {
     [Key]
     [Column(TypeName = "char(5)")]
-    [Required(ErrorMessage = "Employee ID is required")]
-    [RegularExpression(@"^E\d{4}$", ErrorMessage = "Employee ID must be in format E0001")]
+    [Required(ErrorMessage = "Employee ID is required.")]
+    [StringLength(5, MinimumLength = 5, ErrorMessage = "Employee ID must be exactly 5 characters.")]
     public string EmpId { get; set; }
 
     [Column(TypeName = "varchar(50)")]
-    [Required(ErrorMessage = "First Name is required")]
-    [StringLength(50, MinimumLength = 2, ErrorMessage = "First Name must be between 2 and 50 characters")]
-    [RegularExpression(@"^[A-Za-z ]+$", ErrorMessage = "First Name can contain only letters")]
+    [Required(ErrorMessage = "First name is required.")]
+    [StringLength(50, ErrorMessage = "First name cannot exceed 50 characters.")]
     public string FirstName { get; set; }
 
     [Column(TypeName = "varchar(50)")]
-    [StringLength(50, ErrorMessage = "Last Name cannot exceed 50 characters")]
-    [RegularExpression(@"^[A-Za-z ]*$", ErrorMessage = "Last Name can contain only letters")]
-    public string? LastName { get; set; }
+    [StringLength(50, ErrorMessage = "Last name cannot exceed 50 characters.")]
+    public string LastName { get; set; }
 
     [Column(TypeName = "varchar(100)")]
-    [Required(ErrorMessage = "Email is required")]
-    [EmailAddress(ErrorMessage = "Invalid email format")]
+    [Required(ErrorMessage = "Email is required.")]
+    [EmailAddress(ErrorMessage = "Invalid email address.")]
+    [StringLength(100, ErrorMessage = "Email cannot exceed 100 characters.")]
     public string Email { get; set; }
 
     [Column(TypeName = "varchar(100)")]
-    [Required(ErrorMessage = "Password is required")]
-    [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters")]
+    [Required(ErrorMessage = "Password is required.")]
+    [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters.")]
     public string Password { get; set; }
 
     [Column(TypeName = "varchar(20)")]
-    [Required(ErrorMessage = "Role is required")]
-    [RegularExpression(@"^(ADMIN|USER|SUPPORT)$", ErrorMessage = "Role must be ADMIN, USER, or SUPPORT")]
+    [Required(ErrorMessage = "Role is required.")]
+    [RegularExpression("Admin|User", ErrorMessage = "Role must be either 'Admin' or 'User'.")]
     public string Role { get; set; }
 
     [Column(TypeName = "char(10)")]
-    [RegularExpression(@"^[6-9]\d{9}$", ErrorMessage = "Phone number must be a valid 10-digit Indian number")]
-    public string? PhoneNumber { get; set; }
+    [Phone(ErrorMessage = "Invalid phone number.")]
+    [StringLength(10, MinimumLength = 10, ErrorMessage = "Phone number must be 10 digits.")]
+    public string PhoneNumber { get; set; }
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

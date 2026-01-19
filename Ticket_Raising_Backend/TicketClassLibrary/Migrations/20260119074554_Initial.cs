@@ -15,13 +15,13 @@ namespace TicketClassLibrary.Migrations
                 name: "Employee",
                 columns: table => new
                 {
-                    EmpId = table.Column<string>(type: "char(5)", nullable: false),
-                    FirstName = table.Column<string>(type: "varchar(50)", nullable: false),
-                    LastName = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Password = table.Column<string>(type: "varchar(100)", nullable: false),
+                    EmpId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Role = table.Column<string>(type: "varchar(20)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "char(10)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "char(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,9 +32,9 @@ namespace TicketClassLibrary.Migrations
                 name: "TicketPriority",
                 columns: table => new
                 {
-                    PriorityId = table.Column<string>(type: "char(5)", nullable: false),
-                    PriorityLevel = table.Column<string>(type: "varchar(20)", nullable: false),
-                    PriorityDescription = table.Column<string>(type: "varchar(100)", nullable: false),
+                    PriorityId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    PriorityLevel = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    PriorityDescription = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     ResponseTime = table.Column<int>(type: "int", nullable: false),
                     ResolutionTime = table.Column<int>(type: "int", nullable: false)
                 },
@@ -47,10 +47,10 @@ namespace TicketClassLibrary.Migrations
                 name: "TicketType",
                 columns: table => new
                 {
-                    TicketTypeId = table.Column<string>(type: "char(5)", nullable: false),
-                    TypeName = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Description = table.Column<string>(type: "varchar(100)", nullable: false),
-                    PriorityId = table.Column<string>(type: "char(5)", nullable: false)
+                    TicketTypeId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    TypeName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    PriorityId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,12 +67,12 @@ namespace TicketClassLibrary.Migrations
                 name: "Ticket",
                 columns: table => new
                 {
-                    TicketId = table.Column<string>(type: "char(5)", nullable: false),
-                    EmpId = table.Column<string>(type: "char(5)", nullable: false),
-                    Subject = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Description = table.Column<string>(type: "varchar(500)", nullable: false),
-                    Status = table.Column<string>(type: "varchar(20)", nullable: false),
-                    TicketTypeId = table.Column<string>(type: "char(5)", nullable: false),
+                    TicketId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    EmpId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    Subject = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false),
+                    Status = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    TicketTypeId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ResolutionDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -97,9 +97,9 @@ namespace TicketClassLibrary.Migrations
                 name: "TicketAssignment",
                 columns: table => new
                 {
-                    AssignmentId = table.Column<string>(type: "char(3)", nullable: false),
-                    TicketId = table.Column<string>(type: "char(5)", nullable: false),
-                    Support_Emp_Id = table.Column<string>(type: "char(5)", nullable: false),
+                    AssignmentId = table.Column<string>(type: "char(3)", maxLength: 3, nullable: false),
+                    TicketId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    Support_Emp_Id = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
                     AssignmentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -117,11 +117,11 @@ namespace TicketClassLibrary.Migrations
                 name: "TicketComment",
                 columns: table => new
                 {
-                    CommentId = table.Column<string>(type: "char(5)", nullable: false),
-                    TicketId = table.Column<string>(type: "char(5)", nullable: false),
-                    EmpId = table.Column<string>(type: "char(5)", nullable: false),
-                    Support_Emp_Id = table.Column<string>(type: "char(5)", nullable: true),
-                    CommentText = table.Column<string>(type: "varchar(500)", nullable: false),
+                    CommentId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    TicketId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    EmpId = table.Column<string>(type: "char(5)", maxLength: 5, nullable: false),
+                    Support_Emp_Id = table.Column<string>(type: "char(5)", maxLength: 5, nullable: true),
+                    CommentText = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false),
                     CommentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
