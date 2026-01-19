@@ -25,26 +25,32 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.Employee", b =>
                 {
                     b.Property<string>("EmpId")
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
+                        .HasMaxLength(10)
                         .HasColumnType("char(10)");
 
                     b.Property<string>("Role")
@@ -59,6 +65,7 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.Ticket", b =>
                 {
                     b.Property<string>("TicketId")
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<DateTime?>("CreationDate")
@@ -66,10 +73,12 @@ namespace TicketClassLibrary.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
                     b.Property<string>("EmpId")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<DateTime?>("ResolutionDate")
@@ -77,14 +86,17 @@ namespace TicketClassLibrary.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("Subject")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("TicketTypeId")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.HasKey("TicketId");
@@ -99,6 +111,7 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.TicketAssignment", b =>
                 {
                     b.Property<string>("AssignmentId")
+                        .HasMaxLength(3)
                         .HasColumnType("char(3)");
 
                     b.Property<DateTime>("AssignmentDate")
@@ -106,10 +119,12 @@ namespace TicketClassLibrary.Migrations
 
                     b.Property<string>("Support_Emp_Id")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<string>("TicketId")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.HasKey("AssignmentId");
@@ -122,6 +137,7 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.TicketComment", b =>
                 {
                     b.Property<string>("CommentId")
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<DateTime>("CommentDate")
@@ -129,17 +145,21 @@ namespace TicketClassLibrary.Migrations
 
                     b.Property<string>("CommentText")
                         .IsRequired()
+                        .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
 
                     b.Property<string>("EmpId")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<string>("Support_Emp_Id")
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<string>("TicketId")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.HasKey("CommentId");
@@ -154,14 +174,17 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.TicketPriority", b =>
                 {
                     b.Property<string>("PriorityId")
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<string>("PriorityDescription")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("PriorityLevel")
                         .IsRequired()
+                        .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
                     b.Property<int>("ResolutionTime")
@@ -178,18 +201,22 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.TicketType", b =>
                 {
                     b.Property<string>("TicketTypeId")
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("PriorityId")
                         .IsRequired()
+                        .HasMaxLength(5)
                         .HasColumnType("char(5)");
 
                     b.Property<string>("TypeName")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
                     b.HasKey("TicketTypeId");
