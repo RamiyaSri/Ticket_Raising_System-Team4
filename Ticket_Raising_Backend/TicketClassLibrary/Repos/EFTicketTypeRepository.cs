@@ -24,7 +24,7 @@ public class EFTicketTypeRepository : ITicketTypeRepository
             switch (errorNumber)
             {
                 case 2627:
-                    throw new TicketException("Ticket Type Id already exists", 501);
+                    throw new TicketException("Details already exists", 501);
                 default:
                     throw new TicketException(sqlException.Message, 599);
             }
