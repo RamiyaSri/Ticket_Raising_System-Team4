@@ -60,7 +60,7 @@ namespace TicketClassLibrary.Migrations
                         column: x => x.PriorityId,
                         principalTable: "TicketPriority",
                         principalColumn: "PriorityId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,13 +84,13 @@ namespace TicketClassLibrary.Migrations
                         column: x => x.EmpId,
                         principalTable: "Employee",
                         principalColumn: "EmpId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Ticket_TicketType_TicketTypeId",
                         column: x => x.TicketTypeId,
                         principalTable: "TicketType",
                         principalColumn: "TicketTypeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,6 +105,12 @@ namespace TicketClassLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TicketAssignment", x => x.AssignmentId);
+                    table.ForeignKey(
+                        name: "FK_TicketAssignment_Employee_Support_Emp_Id",
+                        column: x => x.Support_Emp_Id,
+                        principalTable: "Employee",
+                        principalColumn: "EmpId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TicketAssignment_Ticket_TicketId",
                         column: x => x.TicketId,
@@ -132,12 +138,19 @@ namespace TicketClassLibrary.Migrations
                         column: x => x.EmpId,
                         principalTable: "Employee",
                         principalColumn: "EmpId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TicketComment_Employee_Support_Emp_Id",
+                        column: x => x.Support_Emp_Id,
+                        principalTable: "Employee",
+                        principalColumn: "EmpId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TicketComment_Ticket_TicketId",
                         column: x => x.TicketId,
                         principalTable: "Ticket",
-                        principalColumn: "TicketId");
+                        principalColumn: "TicketId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -151,6 +164,11 @@ namespace TicketClassLibrary.Migrations
                 column: "TicketTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TicketAssignment_Support_Emp_Id",
+                table: "TicketAssignment",
+                column: "Support_Emp_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TicketAssignment_TicketId",
                 table: "TicketAssignment",
                 column: "TicketId");
@@ -159,6 +177,11 @@ namespace TicketClassLibrary.Migrations
                 name: "IX_TicketComment_EmpId",
                 table: "TicketComment",
                 column: "EmpId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TicketComment_Support_Emp_Id",
+                table: "TicketComment",
+                column: "Support_Emp_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TicketComment_TicketId",
