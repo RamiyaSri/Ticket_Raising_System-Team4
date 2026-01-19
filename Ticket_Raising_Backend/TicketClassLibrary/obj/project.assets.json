@@ -3663,11 +3663,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user1\\Desktop\\Ticket_Raising_System-Team4\\Ticket_Raising_Backend\\TicketClassLibrary\\TicketClassLibrary.csproj",
+      "projectUniqueName": "C:\\Users\\user1\\Desktop\\Team4-Github\\Ticket_Raising_Backend\\TicketClassLibrary\\TicketClassLibrary.csproj",
       "projectName": "TicketClassLibrary",
-      "projectPath": "C:\\Users\\user1\\Desktop\\Ticket_Raising_System-Team4\\Ticket_Raising_Backend\\TicketClassLibrary\\TicketClassLibrary.csproj",
+      "projectPath": "C:\\Users\\user1\\Desktop\\Team4-Github\\Ticket_Raising_Backend\\TicketClassLibrary\\TicketClassLibrary.csproj",
       "packagesPath": "C:\\Users\\user1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\user1\\Desktop\\Ticket_Raising_System-Team4\\Ticket_Raising_Backend\\TicketClassLibrary\\obj\\",
+      "outputPath": "C:\\Users\\user1\\Desktop\\Team4-Github\\Ticket_Raising_Backend\\TicketClassLibrary\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user1\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -3727,7 +3727,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
