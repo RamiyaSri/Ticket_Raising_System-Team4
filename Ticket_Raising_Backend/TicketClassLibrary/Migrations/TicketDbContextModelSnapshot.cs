@@ -129,6 +129,8 @@ namespace TicketClassLibrary.Migrations
 
                     b.HasKey("AssignmentId");
 
+                    b.HasIndex("Support_Emp_Id");
+
                     b.HasIndex("TicketId");
 
                     b.ToTable("TicketAssignment");
@@ -155,7 +157,8 @@ namespace TicketClassLibrary.Migrations
 
                     b.Property<string>("Support_Emp_Id")
                         .HasMaxLength(5)
-                        .HasColumnType("char(5)");
+                        .HasColumnType("char(5)")
+                        .HasColumnName("Support_Emp_Id");
 
                     b.Property<string>("TicketId")
                         .IsRequired()
@@ -165,6 +168,8 @@ namespace TicketClassLibrary.Migrations
                     b.HasKey("CommentId");
 
                     b.HasIndex("EmpId");
+
+                    b.HasIndex("Support_Emp_Id");
 
                     b.HasIndex("TicketId");
 
@@ -231,13 +236,13 @@ namespace TicketClassLibrary.Migrations
                     b.HasOne("TicketClassLibrary.Models.Employee", "Employee")
                         .WithMany("Tickets")
                         .HasForeignKey("EmpId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("TicketClassLibrary.Models.TicketType", "TicketType")
                         .WithMany("Tickets")
                         .HasForeignKey("TicketTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -247,11 +252,19 @@ namespace TicketClassLibrary.Migrations
 
             modelBuilder.Entity("TicketClassLibrary.Models.TicketAssignment", b =>
                 {
-                    b.HasOne("TicketClassLibrary.Models.Ticket", "Ticket")
+                    b.HasOne("TicketClassLibrary.Models.Employee", "Employee")
                         .WithMany()
+                        .HasForeignKey("Support_Emp_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TicketClassLibrary.Models.Ticket", "Ticket")
+                        .WithMany("TicketAssignments")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Employee");
 
                     b.Navigation("Ticket");
                 });
@@ -261,16 +274,23 @@ namespace TicketClassLibrary.Migrations
                     b.HasOne("TicketClassLibrary.Models.Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmpId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("TicketClassLibrary.Models.Employee", "SupportEmployee")
+                        .WithMany()
+                        .HasForeignKey("Support_Emp_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("TicketClassLibrary.Models.Ticket", "Ticket")
                         .WithMany("TicketComments")
                         .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Employee");
+
+                    b.Navigation("SupportEmployee");
 
                     b.Navigation("Ticket");
                 });
@@ -280,7 +300,7 @@ namespace TicketClassLibrary.Migrations
                     b.HasOne("TicketClassLibrary.Models.TicketPriority", "TicketPriority")
                         .WithMany("TicketTypes")
                         .HasForeignKey("PriorityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TicketPriority");
@@ -293,6 +313,8 @@ namespace TicketClassLibrary.Migrations
 
             modelBuilder.Entity("TicketClassLibrary.Models.Ticket", b =>
                 {
+                    b.Navigation("TicketAssignments");
+
                     b.Navigation("TicketComments");
                 });
 
