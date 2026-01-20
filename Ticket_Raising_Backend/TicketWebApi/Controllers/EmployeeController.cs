@@ -9,7 +9,6 @@ namespace TicketWebApi.Controllers
     public class EmployeesController : ControllerBase
     {
         IEmployeeRepository employeeRepo;
-
         public EmployeesController(IEmployeeRepository empRepository)
         {
             employeeRepo = empRepository;
