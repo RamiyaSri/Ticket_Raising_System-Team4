@@ -12,7 +12,7 @@ using TicketClassLibrary.Models;
 namespace TicketClassLibrary.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    [Migration("20260120044544_Initial")]
+    [Migration("20260120111253_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -61,6 +61,12 @@ namespace TicketClassLibrary.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.HasKey("EmpId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique();
 
                     b.ToTable("Employee");
                 });

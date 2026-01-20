@@ -59,6 +59,12 @@ namespace TicketClassLibrary.Migrations
 
                     b.HasKey("EmpId");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique();
+
                     b.ToTable("Employee");
                 });
 

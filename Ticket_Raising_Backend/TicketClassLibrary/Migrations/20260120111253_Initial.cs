@@ -154,6 +154,18 @@ namespace TicketClassLibrary.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employee_Email",
+                table: "Employee",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employee_PhoneNumber",
+                table: "Employee",
+                column: "PhoneNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ticket_EmpId",
                 table: "Ticket",
                 column: "EmpId");

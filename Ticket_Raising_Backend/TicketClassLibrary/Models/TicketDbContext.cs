@@ -25,7 +25,7 @@ public class TicketDbContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseSqlServer(
-                "data source=localhost\\SQLEXPRESS; database=TicketTeam4DB; integrated security=true; Trust Server Certificate=true"
+                "data source=localhost\\SQLEXPRESS; database=Team4TicketDB; integrated security=true; Trust Server Certificate=true"
             );
         }
     }
@@ -33,6 +33,14 @@ public class TicketDbContext : DbContext
 protected override void OnModelCreating(ModelBuilder modelBuilder)
  
 {
+    modelBuilder.Entity<Employee>()
+        .HasIndex(e => e.Email)
+        .IsUnique();
+ 
+    modelBuilder.Entity<Employee>()
+        .HasIndex(e => e.PhoneNumber)
+        .IsUnique();
+
     modelBuilder.Entity<Ticket>()
         .HasOne(t => t.Employee)
         .WithMany(e => e.Tickets)
@@ -69,7 +77,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .HasForeignKey(ta => ta.TicketId)
         .OnDelete(DeleteBehavior.Cascade);
  
- 
+
     modelBuilder.Entity<TicketAssignment>()
         .HasOne(ta => ta.Employee)
         .WithMany(e => e.TicketAssignments)
@@ -81,5 +89,5 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .WithMany(tp => tp.TicketTypes)
         .HasForeignKey(tt => tt.PriorityId)
         .OnDelete(DeleteBehavior.Restrict);
-}
+    }
 }
