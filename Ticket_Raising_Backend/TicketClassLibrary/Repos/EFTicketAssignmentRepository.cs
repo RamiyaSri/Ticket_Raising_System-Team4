@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using TicketClassLibrary.Exceptions;
 using TicketClassLibrary.Models;
 
 namespace TicketClassLibrary.Repos;
