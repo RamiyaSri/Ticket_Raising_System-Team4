@@ -33,7 +33,7 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
         catch (Exception)
         {
             throw new TicketException("Assignment ID does not exsist for delete",599);
-        }
+        } 
         
     }
 
