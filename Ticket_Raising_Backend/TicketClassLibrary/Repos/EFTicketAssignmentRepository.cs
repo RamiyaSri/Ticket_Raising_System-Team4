@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TicketClassLibrary.Exceptions;
 using TicketClassLibrary.Models;
@@ -15,9 +16,18 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
             await context.TicketAssignments.AddAsync(assignment);
             await context.SaveChangesAsync();
         }
-        catch (Exception)
+        catch (DbUpdateException ex)
         {
-            throw new TicketException("Unexpected error while assigning ticket",599);
+            SqlException sqlException = ex.InnerException as SqlException;
+            int errorNumber = sqlException.Number;
+ 
+            switch (errorNumber)
+            {
+                case 2627:
+                    throw new TicketException("Details already exists", 501);
+                default:
+                    throw new TicketException(sqlException.Message, 599);
+            }
         }
     }
 
@@ -39,17 +49,18 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
 
     public async Task<List<TicketAssignment>> GetAllAssignmentsAsync()
     {
-        return await context.TicketAssignments.ToListAsync();
+        List<TicketAssignment> ticketAssignments =  await context.TicketAssignments.ToListAsync();
+        return ticketAssignments;
     }
 
     public async Task<TicketAssignment?> GetAssignmentAsync(string assignmentId)
     {
         try
         {
-            TicketAssignment assignment2getall = await (from a in context.TicketAssignments 
+            TicketAssignment assignment2get= await (from a in context.TicketAssignments 
                                                 where a.AssignmentId == assignmentId
                                                 select a).FirstAsync();
-            return assignment2getall;
+            return assignment2get;
         }
         catch (Exception)
         {
@@ -59,16 +70,20 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
 
     public async Task<List<TicketAssignment>> GetAssignmentsBySupportEmployeeAsync(string supportEmpId)
     {
-        return await (from a in context.TicketAssignments
+        List<TicketAssignment> ticketAssignments =  await (from a in context.TicketAssignments
                     where a.Support_Emp_Id == supportEmpId
                     select a).ToListAsync();
+
+        return ticketAssignments;
     }
 
     public async Task<List<TicketAssignment?>> GetAssignmentsByTicketAsync(string ticketId)
     {
-        return await (from a in context.TicketAssignments
+        List<TicketAssignment> ticketAssignments =  await (from a in context.TicketAssignments
                     where a.TicketId == ticketId
                     select a).ToListAsync();
+
+        return ticketAssignments;
     }
 
     public async Task UpdateAssignmentAsync(string assignmentId, TicketAssignment updatedAssignment)
@@ -82,7 +97,7 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
 
                 await context.SaveChangesAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw new TicketException("ex.message", 599);
             }
