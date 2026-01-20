@@ -55,7 +55,7 @@ public class EFTicketCommentRepository : ITicketCommentRepository
             TicketComment ticketComment = await (from tc in context.TicketComments where tc.CommentId == commentId select tc).FirstAsync();
             return ticketComment;
         }
-        catch(Exception e){
+        catch{
             throw new TicketException("No Comment Found",599);
         }
         
