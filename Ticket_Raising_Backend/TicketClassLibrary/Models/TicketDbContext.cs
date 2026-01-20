@@ -24,13 +24,12 @@ public class TicketDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer(
-                "data source=localhost\\SQLEXPRESS; database=TicketTeam4DB; integrated security=true; Trust Server Certificate=true"
-            );
+            optionsBuilder.UseSqlServer( "data source=localhost\\SQLEXPRESS; database=TicketTeam4DB; integrated security=true; Trust Server Certificate=true");
         }
     }
 
 protected override void OnModelCreating(ModelBuilder modelBuilder)
+
 {
     modelBuilder.Entity<Ticket>()
         .HasOne(t => t.Employee)
@@ -68,7 +67,7 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
         .HasForeignKey(ta => ta.TicketId)
         .OnDelete(DeleteBehavior.Cascade);
 
-    // ✅ FIXED mapping
+
     modelBuilder.Entity<TicketAssignment>()
         .HasOne(ta => ta.Employee)
         .WithMany(e => e.TicketAssignments)
