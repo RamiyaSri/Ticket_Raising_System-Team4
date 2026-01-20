@@ -63,6 +63,7 @@ public class EFTicketPriorityRepository : ITicketPriorityRepository
             context.TicketPriorities.Remove(priority2del);
             await context.SaveChangesAsync();
         }
+        
         if (priority2del == null)
         {
             throw new TicketException("No such priority ID", 502);
