@@ -9,10 +9,10 @@ namespace TicketWebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class TicketCommentController : ControllerBase
+    public class TicketCommentsController : ControllerBase
     {
         ITicketCommentRepository ticketCommentRepository;
-        public TicketCommentController(ITicketCommentRepository ticketCommentRepo)
+        public TicketCommentsController(ITicketCommentRepository ticketCommentRepo)
         {
             ticketCommentRepository = ticketCommentRepo;
         }
@@ -40,14 +40,14 @@ namespace TicketWebApi.Controllers
             }
         }
 
-        [HttpGet("/BySupportEmp/{SupEmpId}")]
+        [HttpGet("/BySupportEmpId/{SupportEmpId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> GetBySupEmpId(string SupEmpId)
+        public async Task<ActionResult> GetBySupEmpId(string SupportEmpId)
         {
             try
             {
-                List<TicketComment> ticketComments = await ticketCommentRepository.GetCommentsBySupportEmployeeAsync(SupEmpId);
+                List<TicketComment> ticketComments = await ticketCommentRepository.GetCommentsBySupportEmployeeAsync(SupportEmpId);
                 return Ok(ticketComments);
             }
             catch(TicketException e)
@@ -56,7 +56,7 @@ namespace TicketWebApi.Controllers
             }
         }
 
-        [HttpGet("/ByTicket/{ticketId}")]
+        [HttpGet("/ByTicketId/{ticketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetByTicket(string ticketId)
