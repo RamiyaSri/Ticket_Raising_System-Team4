@@ -45,4 +45,5 @@ public class Ticket
     public virtual TicketType TicketType { get; set; }
 
     public virtual ICollection<TicketComment> TicketComments { get; set; } = new List<TicketComment>();
+    public virtual ICollection<TicketAssignment> TicketAssignments { get; set; } = new List<TicketAssignment>();
 }

@@ -28,4 +28,7 @@ public class TicketAssignment
     public DateTime AssignmentDate { get; set; }
 
     public virtual Ticket Ticket { get; set; }
+    public virtual Employee Employee { get; set; }
+
+    
 }

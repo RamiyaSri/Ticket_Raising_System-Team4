@@ -1,4 +1,4 @@
-namespace TicketClassLibrary.Exceptions
+namespace TicketClassLibrary.Models
 {
     public class TicketException : Exception
     {
