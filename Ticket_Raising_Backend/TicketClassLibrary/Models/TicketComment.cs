@@ -21,7 +21,6 @@ public class TicketComment
     [Required(ErrorMessage = "Employee ID is required.")]
     [StringLength(5, MinimumLength = 5, ErrorMessage = "Employee ID must be exactly 5 characters.")]
     public string EmpId { get; set; }
-
     
     [Column("Support_Emp_Id", TypeName = "char(5)")]
     [StringLength(5, MinimumLength = 5, ErrorMessage = "Support Employee ID must be exactly 5 characters.")]
@@ -38,12 +37,12 @@ public class TicketComment
 
 
     [ForeignKey(nameof(TicketId))]
-    public virtual Ticket Ticket { get; set; }
+    public virtual Ticket? Ticket { get; set; }
 
     [ForeignKey(nameof(EmpId))]
-    public virtual Employee Employee { get; set; }
+    public virtual Employee? Employee { get; set; }
 
 
     [ForeignKey(nameof(Support_Emp_Id))]
-    public virtual Employee SupportEmployee { get; set; }
+    public virtual Employee? SupportEmployee { get; set; }
 }
