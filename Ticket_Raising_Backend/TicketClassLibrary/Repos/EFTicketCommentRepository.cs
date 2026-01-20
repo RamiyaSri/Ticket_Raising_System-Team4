@@ -1,3 +1,4 @@
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TicketClassLibrary.Models;
 
@@ -13,8 +14,18 @@ public class EFTicketCommentRepository : ITicketCommentRepository
             await context.TicketComments.AddAsync(comment);
             await context.SaveChangesAsync();
         }
-        catch(Exception e){
-            throw new TicketException(e.Message,599);
+        catch (DbUpdateException ex)
+        {
+            SqlException? sqlException = ex.InnerException as SqlException;
+            int errorNumber = sqlException.Number;
+
+            switch (errorNumber)
+            {
+                case 2627:
+                    throw new TicketException("Details already exists", 501);
+                default:
+                    throw new TicketException(sqlException.Message, 599);
+            }
         }
     }
 
@@ -45,7 +56,7 @@ public class EFTicketCommentRepository : ITicketCommentRepository
             return ticketComment;
         }
         catch(Exception e){
-            throw new TicketException(e.Message,599);
+            throw new TicketException("No Comment Found",599);
         }
         
     }
@@ -56,7 +67,7 @@ public class EFTicketCommentRepository : ITicketCommentRepository
         List<TicketComment> ticketComments = await (from tc in context.TicketComments where tc.EmpId == empId select tc).ToListAsync();
         if (ticketComments.Count() == 0)
         {
-            throw new TicketException("No Comments found for given Employee ID",501);
+            throw new TicketException("No Comments found for given Employee",501);
         }
         return ticketComments;
 
@@ -67,7 +78,7 @@ public class EFTicketCommentRepository : ITicketCommentRepository
         List<TicketComment> ticketComments = await (from tc in context.TicketComments where tc.Support_Emp_Id == supportEmpId select tc).ToListAsync();
         if (ticketComments.Count() == 0)
         {
-            throw new TicketException("No Comments found for given Support Employee ID",501);
+            throw new TicketException("No Comments found for given Support Employee",501);
         }
         return ticketComments;
     }
@@ -77,7 +88,7 @@ public class EFTicketCommentRepository : ITicketCommentRepository
         List<TicketComment> ticketComments = await (from tc in context.TicketComments where tc.TicketId == ticketId select tc).ToListAsync();
         if (ticketComments.Count() == 0)
         {
-            throw new TicketException("No Comments found for given Ticket ID",501);
+            throw new TicketException("No Comments found for given Ticket",501);
         }
         return ticketComments;
     }
@@ -95,7 +106,7 @@ public class EFTicketCommentRepository : ITicketCommentRepository
             ticketComment2Edit.CommentDate = comment.CommentDate;
         }
         catch(Exception e){
-            throw new TicketException(e.Message,599);
+            throw new TicketException($"Error updating comment with ID '{commentId}': {e.Message}",599);
         }
     }
 }
