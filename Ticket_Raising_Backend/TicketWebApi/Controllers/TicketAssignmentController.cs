@@ -9,10 +9,10 @@ namespace TicketWebApi.Controllers
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
-    public class TicketAssignmentController : ControllerBase
+    public class TicketAssignmentsController : ControllerBase
     {
         ITicketAssignmentRepository assignmentRepo;
-        public TicketAssignmentController(ITicketAssignmentRepository repository)
+        public TicketAssignmentsController(ITicketAssignmentRepository repository)
         {
             assignmentRepo = repository;
         }
@@ -109,7 +109,7 @@ namespace TicketWebApi.Controllers
             }
 
         }
-        [HttpGet("/GetByEmpId/{supportEmpId}")]
+        [HttpGet("/BySupportId/{supportEmpId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetByCustomerId(string supportEmpId)
