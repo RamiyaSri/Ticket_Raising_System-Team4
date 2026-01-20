@@ -72,7 +72,8 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
         List<TicketAssignment> ticketAssignments =  await (from a in context.TicketAssignments
                     where a.Support_Emp_Id == supportEmpId
                     select a).ToListAsync();
-
+        if(ticketAssignments.Count == 0)
+            throw new TicketException("No new Assignments found for Support Employee ID",501);
         return ticketAssignments;
     }
 
@@ -81,6 +82,8 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
         List<TicketAssignment> ticketAssignments =  await (from a in context.TicketAssignments
                     where a.TicketId == ticketId
                     select a).ToListAsync();
+        if(ticketAssignments.Count == 0)
+            throw new TicketException("No new assignments found for Ticket ID",501);
 
         return ticketAssignments;
     }
