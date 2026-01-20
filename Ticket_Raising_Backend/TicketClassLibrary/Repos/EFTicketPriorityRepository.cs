@@ -50,29 +50,30 @@ public class EFTicketPriorityRepository : ITicketPriorityRepository
             throw new TicketException(sqlException.Message, 599);
         }
     }
+      public async Task DeletePriorityAsync(string priorityId)
+{
+    TicketPriority priority2del =
+        await context.TicketPriorities
+                     .Include(p => p.TicketTypes)
+                     .FirstOrDefaultAsync(p => p.PriorityId == priorityId);
 
-    public async Task DeletePriorityAsync(string priorityId)
+    
+    if (priority2del == null)
     {
-        TicketPriority priority2del =
-            await context.TicketPriorities
-                         .Include("TicketTypes")
-                         .FirstOrDefaultAsync(p => p.PriorityId == priorityId);
-
-        if (priority2del.TicketTypes.Count == 0)
-        {
-            context.TicketPriorities.Remove(priority2del);
-            await context.SaveChangesAsync();
-        }
-        
-        if (priority2del == null)
-        {
-            throw new TicketException("No such priority ID", 502);
-        }
-        else
-        {
-            throw new TicketException("Cannot delete priority with existing ticket types", 503);
-        }
+        throw new TicketException("No such priority ID", 502);
     }
+
+    
+    if (priority2del.TicketTypes != null && priority2del.TicketTypes.Count > 0)
+    {
+        throw new TicketException("Cannot delete priority with existing ticket types", 503);
+    }
+
+    context.TicketPriorities.Remove(priority2del);
+    await context.SaveChangesAsync();
+}
+
+     
 
     public async Task<TicketPriority> GetPriorityAsync(string priorityId)
     {
