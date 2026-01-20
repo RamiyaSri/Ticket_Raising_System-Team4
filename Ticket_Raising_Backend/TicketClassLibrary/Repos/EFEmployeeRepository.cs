@@ -19,9 +19,13 @@ public class EFEmployeeRepository : IEmployeeRepository
         {
             SqlException sqlException = ex.InnerException as SqlException;
 
-            if (sqlException.Number == 2627 || sqlException.Number == 2601)
+            if (sqlException.Number == 2601)
             {
                 throw new TicketException("Employee email or phone already exists", 501);
+            }
+            else if(sqlException.Number == 2627)
+            {
+                throw new TicketException("Employee already exists", 502);
             }
             else
             {
