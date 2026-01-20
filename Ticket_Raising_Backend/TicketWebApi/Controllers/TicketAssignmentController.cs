@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TicketClassLibrary.Models;
@@ -6,6 +7,7 @@ using TicketClassLibrary.Repos;
 namespace TicketWebApi.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class TicketAssignmentController : ControllerBase
     {
