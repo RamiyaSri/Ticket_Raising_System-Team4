@@ -94,20 +94,11 @@ namespace TicketClassLibrary.Repos
                 throw new TicketException("No such ticket ID", 502);
             }
         }
-
-
-   
-
         public async Task<List<Ticket>> GetAllTicketsAsync()
         {
-            return await context.Tickets
-                .Include(t => t.Employee)
-                .Include(t => t.TicketType)
-                .ToListAsync();
+            List<Ticket> tickets = await context.Tickets.ToListAsync();
+            return tickets;
         }
-
-   
-
         public async Task<List<Ticket>> GetTicketsByEmployeeAsync(string empId)
         {
             return await context.Tickets
