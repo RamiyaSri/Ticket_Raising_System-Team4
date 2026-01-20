@@ -6,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITicketPriorityRepository, EFTicketPriorityRepository>();
+builder.Services.AddScoped<ITicketRepository, EFTicketRepository>();
+builder.Services.AddScoped<ITicketTypeRepository, EFTicketTypeRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EFEmployeeRepository>();
+builder.Services.AddScoped<ITicketAssignmentRepository, EFTicketAssignmentRepository>();
+builder.Services.AddScoped<ITicketCommentRepository, EFTicketCommentRepository>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
