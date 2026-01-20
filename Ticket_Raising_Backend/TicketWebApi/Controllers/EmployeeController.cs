@@ -1,11 +1,13 @@
 using TicketClassLibrary.Models;
 using TicketClassLibrary.Repos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TicketWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class EmployeesController : ControllerBase
     {
         IEmployeeRepository employeeRepo;
