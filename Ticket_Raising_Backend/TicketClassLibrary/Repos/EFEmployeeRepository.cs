@@ -17,12 +17,20 @@ public class EFEmployeeRepository : IEmployeeRepository
         }
         catch (DbUpdateException ex)
         {
-            SqlException sqlEx = ex.InnerException as SqlException;
+            SqlException sqlException = ex.InnerException as SqlException;
 
-            if (sqlEx?.Number == 2627)
-                throw new TicketException("Employee ID already exists", 501);
-
-            throw new TicketException(sqlEx?.Message ?? ex.Message, 599);
+            if (sqlException.Number == 2627 || sqlException.Number == 2601)
+            {
+                throw new TicketException("Employee email or phone already exists", 501);
+            }
+            else
+            {
+                throw new TicketException("Unable to add employee details", 599);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new TicketException(e.Message, 599);
         }
     }
  
