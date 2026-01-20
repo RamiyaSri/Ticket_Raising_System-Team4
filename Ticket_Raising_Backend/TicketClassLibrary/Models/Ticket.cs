@@ -41,8 +41,8 @@ public class Ticket
     public DateTime? CreationDate { get; set; }
     public DateTime? ResolutionDate { get; set; }
 
-    public virtual Employee Employee { get; set; }
-    public virtual TicketType TicketType { get; set; }
+    public virtual Employee? Employee { get; set; }
+    public virtual TicketType? TicketType { get; set; }
 
     public virtual ICollection<TicketComment> TicketComments { get; set; } = new List<TicketComment>();
     public virtual ICollection<TicketAssignment> TicketAssignments { get; set; } = new List<TicketAssignment>();
