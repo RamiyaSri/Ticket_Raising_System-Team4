@@ -15,9 +15,14 @@ public class EFEmployeeRepository : IEmployeeRepository
             await context.Employees.AddAsync(employee);
             await context.SaveChangesAsync();
         }
-        catch (Exception e)
+        catch (DbUpdateException ex)
         {
-            throw new TicketException(e.Message, 599);
+            SqlException sqlEx = ex.InnerException as SqlException;
+
+            if (sqlEx?.Number == 2627)
+                throw new TicketException("Employee ID already exists", 501);
+
+            throw new TicketException(sqlEx?.Message ?? ex.Message, 599);
         }
     }
  
@@ -74,7 +79,7 @@ public class EFEmployeeRepository : IEmployeeRepository
         }
         catch (Exception e)
         {
-            throw new TicketException(e.Message, 599);
+            throw new TicketException("No employee found", 599);
         }
     }
  
