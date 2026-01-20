@@ -27,6 +27,6 @@ public class TicketType
     [StringLength(5, MinimumLength = 5, ErrorMessage = "Priority ID must be exactly 5 characters.")]
     public string PriorityId { get; set; }
 
-    public virtual TicketPriority TicketPriority { get; set; }
+    public virtual TicketPriority? TicketPriority { get; set; }
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }

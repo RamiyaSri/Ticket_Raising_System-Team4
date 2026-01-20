@@ -38,12 +38,12 @@ public class TicketComment
 
 
     [ForeignKey(nameof(TicketId))]
-    public virtual Ticket Ticket { get; set; }
+    public virtual Ticket? Ticket { get; set; }
 
     [ForeignKey(nameof(EmpId))]
-    public virtual Employee Employee { get; set; }
+    public virtual Employee? Employee { get; set; }
 
 
     [ForeignKey(nameof(Support_Emp_Id))]
-    public virtual Employee SupportEmployee { get; set; }
+    public virtual Employee? SupportEmployee { get; set; }
 }
