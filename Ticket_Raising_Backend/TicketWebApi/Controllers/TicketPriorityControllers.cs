@@ -7,6 +7,7 @@ namespace TicketWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PrioritiesController : ControllerBase
     {
         ITicketPriorityRepository priorityRepo;
