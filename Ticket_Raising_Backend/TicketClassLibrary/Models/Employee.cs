@@ -35,7 +35,7 @@ public class Employee
 
     [Column(TypeName = "varchar(20)")]
     [Required(ErrorMessage = "Role is required.")]
-    [RegularExpression("Admin|User", ErrorMessage = "Role must be either 'Admin' or 'User'.")]
+    [RegularExpression("Admin|User|Supporter", ErrorMessage = "Role must be either 'Admin', 'User', or 'Supporter'.")]
     public string Role { get; set; }
 
     [Column(TypeName = "char(10)")]
@@ -44,4 +44,6 @@ public class Employee
     public string PhoneNumber { get; set; }
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+    public virtual ICollection<TicketAssignment> TicketAssignments { get; set; } = new List<TicketAssignment>();
+
 }

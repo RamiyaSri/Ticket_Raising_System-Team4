@@ -253,7 +253,7 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.TicketAssignment", b =>
                 {
                     b.HasOne("TicketClassLibrary.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("TicketAssignments")
                         .HasForeignKey("Support_Emp_Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -308,6 +308,8 @@ namespace TicketClassLibrary.Migrations
 
             modelBuilder.Entity("TicketClassLibrary.Models.Employee", b =>
                 {
+                    b.Navigation("TicketAssignments");
+
                     b.Navigation("Tickets");
                 });
 

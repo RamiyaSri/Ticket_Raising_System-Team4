@@ -12,7 +12,7 @@ using TicketClassLibrary.Models;
 namespace TicketClassLibrary.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    [Migration("20260119134022_Initial")]
+    [Migration("20260120044544_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -256,7 +256,7 @@ namespace TicketClassLibrary.Migrations
             modelBuilder.Entity("TicketClassLibrary.Models.TicketAssignment", b =>
                 {
                     b.HasOne("TicketClassLibrary.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("TicketAssignments")
                         .HasForeignKey("Support_Emp_Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -311,6 +311,8 @@ namespace TicketClassLibrary.Migrations
 
             modelBuilder.Entity("TicketClassLibrary.Models.Employee", b =>
                 {
+                    b.Navigation("TicketAssignments");
+
                     b.Navigation("Tickets");
                 });
 

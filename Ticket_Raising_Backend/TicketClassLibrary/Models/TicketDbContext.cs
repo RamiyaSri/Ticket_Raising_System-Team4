@@ -25,68 +25,60 @@ public class TicketDbContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseSqlServer(
-                "data source=localhost\\SQLEXPRESS; database=TicketRaisingTeam4DB; integrated security=true; Trust Server Certificate=true"
+                "data source=localhost\\SQLEXPRESS; database=TicketTeam4DB; integrated security=true; Trust Server Certificate=true"
             );
         }
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-       
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder.Entity<Ticket>()
+        .HasOne(t => t.Employee)
+        .WithMany(e => e.Tickets)
+        .HasForeignKey(t => t.EmpId)
+        .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Ticket>()
-            .HasOne(t => t.Employee)
-            .WithMany(e => e.Tickets)
-            .HasForeignKey(t => t.EmpId)
-            .OnDelete(DeleteBehavior.Restrict);
+    modelBuilder.Entity<Ticket>()
+        .HasOne(t => t.TicketType)
+        .WithMany(tt => tt.Tickets)
+        .HasForeignKey(t => t.TicketTypeId)
+        .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Ticket>()
-            .HasOne(t => t.TicketType)
-            .WithMany(tt => tt.Tickets)
-            .HasForeignKey(t => t.TicketTypeId)
-            .OnDelete(DeleteBehavior.Restrict);
+    modelBuilder.Entity<TicketComment>()
+        .HasOne(tc => tc.Ticket)
+        .WithMany(t => t.TicketComments)
+        .HasForeignKey(tc => tc.TicketId)
+        .OnDelete(DeleteBehavior.Restrict);
 
-      
+    modelBuilder.Entity<TicketComment>()
+        .HasOne(tc => tc.Employee)
+        .WithMany()
+        .HasForeignKey(tc => tc.EmpId)
+        .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<TicketComment>()
-            .HasOne(tc => tc.Ticket)
-            .WithMany(t => t.TicketComments)
-            .HasForeignKey(tc => tc.TicketId)
-            .OnDelete(DeleteBehavior.Restrict);
+    modelBuilder.Entity<TicketComment>()
+        .HasOne(tc => tc.SupportEmployee)
+        .WithMany()
+        .HasForeignKey(tc => tc.Support_Emp_Id)
+        .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<TicketComment>()
-            .HasOne(tc => tc.Employee)
-            .WithMany()
-            .HasForeignKey(tc => tc.EmpId)
-            .OnDelete(DeleteBehavior.Restrict);
+    modelBuilder.Entity<TicketAssignment>()
+        .HasOne(ta => ta.Ticket)
+        .WithMany(t => t.TicketAssignments)
+        .HasForeignKey(ta => ta.TicketId)
+        .OnDelete(DeleteBehavior.Cascade);
 
-    
-        modelBuilder.Entity<TicketComment>()
-            .HasOne(tc => tc.SupportEmployee)
-            .WithMany()
-            .HasForeignKey(tc => tc.Support_Emp_Id)
-            .OnDelete(DeleteBehavior.Restrict);
+    // ✅ FIXED mapping
+    modelBuilder.Entity<TicketAssignment>()
+        .HasOne(ta => ta.Employee)
+        .WithMany(e => e.TicketAssignments)
+        .HasForeignKey(ta => ta.Support_Emp_Id)
+        .OnDelete(DeleteBehavior.Restrict);
 
-      
-
-        modelBuilder.Entity<TicketAssignment>()
-            .HasOne(ta => ta.Ticket)
-            .WithMany(t => t.TicketAssignments)
-            .HasForeignKey(ta => ta.TicketId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<TicketAssignment>()
-            .HasOne(ta => ta.Employee)
-            .WithMany()
-            .HasForeignKey(ta => ta.Support_Emp_Id)
-            .OnDelete(DeleteBehavior.Restrict);
-
-     
-
-        modelBuilder.Entity<TicketType>()
-            .HasOne(tt => tt.TicketPriority)
-            .WithMany(tp => tp.TicketTypes)
-            .HasForeignKey(tt => tt.PriorityId)
-            .OnDelete(DeleteBehavior.Restrict);
-    }
+    modelBuilder.Entity<TicketType>()
+        .HasOne(tt => tt.TicketPriority)
+        .WithMany(tp => tp.TicketTypes)
+        .HasForeignKey(tt => tt.PriorityId)
+        .OnDelete(DeleteBehavior.Restrict);
+}
 }
