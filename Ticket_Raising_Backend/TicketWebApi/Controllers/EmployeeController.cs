@@ -10,9 +10,9 @@ namespace TicketWebApi.Controllers
     {
         IEmployeeRepository employeeRepo;
 
-        public EmployeesController(IEmployeeRepository emprepository)
+        public EmployeesController(IEmployeeRepository empRepository)
         {
-            employeeRepo = emprepository;
+            employeeRepo = empRepository;
         }
 
         [HttpGet]
