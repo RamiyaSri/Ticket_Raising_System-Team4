@@ -127,5 +127,19 @@ public class EFEmployeeRepository : IEmployeeRepository
             throw new TicketException(e.Message, 599);
         }
     }
+
+    public async Task<Employee> LoginAsync(string empId, string password)
+    {
+        try
+        {
+            return await context.Employees
+                .FirstAsync(e => e.EmpId == empId && e.Password == password);
+        }
+        catch
+        {
+            throw new TicketException("Invalid Employee Id or Password", 401);
+        }
+    }
+
 }
  

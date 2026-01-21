@@ -97,5 +97,22 @@ namespace TicketWebApi.Controllers
             }
             
         }
+
+        [HttpPost("login")]
+        [AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        public async Task<ActionResult> Login(string empId, string password)
+        {
+            try
+            {
+                Employee employee = await employeeRepo.LoginAsync(empId, password);
+                return Ok(employee);
+            }
+            catch (TicketException ex)
+            {
+                return Unauthorized(ex.Message);
+            }
+        }
     }
 }
