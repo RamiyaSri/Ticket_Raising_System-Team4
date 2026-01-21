@@ -11,16 +11,17 @@ namespace TicketWebApi.Controllers
     [ApiController]
     public class TicketAssignmentsController : ControllerBase
     {
-        ITicketAssignmentRepository assignmentRepo;
+        ITicketAssignmentRepository AssignmentRepo;
         public TicketAssignmentsController(ITicketAssignmentRepository repository)
         {
-            assignmentRepo = repository;
+            AssignmentRepo = repository;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            List<TicketAssignment> assignAll = await assignmentRepo.GetAllAssignmentsAsync();
+            List<TicketAssignment> assignAll = await 
+                AssignmentRepo.GetAllAssignmentsAsync();
             return Ok(assignAll);
         }
         [HttpGet("{assignmentId}")]
@@ -30,8 +31,9 @@ namespace TicketWebApi.Controllers
         {
             try
             {
-            TicketAssignment assign2one = await assignmentRepo.GetAssignmentAsync(assignmentId);
-            return Ok(assign2one);
+                TicketAssignment assign2one = await
+                    AssignmentRepo.GetAssignmentAsync(assignmentId);
+                return Ok(assign2one);
             }
             
             catch(TicketException ex)
@@ -46,7 +48,7 @@ namespace TicketWebApi.Controllers
         {
             try
             {
-                await assignmentRepo.AddAssignmentAsync(assignment);
+                await AssignmentRepo.AddAssignmentAsync(assignment);
                 return Created(
                     $"api/assignments/{assignment.AssignmentId}",
                     assignment
@@ -64,7 +66,7 @@ namespace TicketWebApi.Controllers
         {
             try
             {
-                await assignmentRepo.UpdateAssignmentAsync(assignmentId,assignment);
+                await AssignmentRepo.UpdateAssignmentAsync(assignmentId,assignment);
                 return Ok(assignment);
 
             }
@@ -83,7 +85,7 @@ namespace TicketWebApi.Controllers
         public async Task<ActionResult> Delete(string assignmentId){
             try
             {
-                await assignmentRepo.DeleteAssignmentAsync(assignmentId);
+                await AssignmentRepo.DeleteAssignmentAsync(assignmentId);
                 return Ok();
             }
             catch (TicketException ex)
@@ -92,7 +94,7 @@ namespace TicketWebApi.Controllers
             }
             
         }
-        [HttpGet("/ByTicketId/{ticketId}")]
+        [HttpGet("/GetAssignments/ByTicketId/{ticketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetByTicketId(string ticketId)
@@ -100,7 +102,7 @@ namespace TicketWebApi.Controllers
             try
             {
                 List<TicketAssignment> assignByTicketId = await 
-                    assignmentRepo.GetAssignmentsByTicketAsync(ticketId);
+                    AssignmentRepo.GetAssignmentsByTicketAsync(ticketId);
                 return Ok(assignByTicketId);
             }
             catch(TicketException ex)
@@ -109,7 +111,7 @@ namespace TicketWebApi.Controllers
             }
 
         }
-        [HttpGet("/BySupportId/{supportEmpId}")]
+        [HttpGet("/GetAssignments/BySupportEmpId/{supportEmpId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetByCustomerId(string supportEmpId)
@@ -117,7 +119,7 @@ namespace TicketWebApi.Controllers
             try
             {
                 List<TicketAssignment> assignByCustomerId = await
-                    assignmentRepo.GetAssignmentsBySupportEmployeeAsync(supportEmpId);
+                    AssignmentRepo.GetAssignmentsBySupportEmployeeAsync(supportEmpId);
                 return Ok(assignByCustomerId);   
             }
             catch(TicketException ex)
