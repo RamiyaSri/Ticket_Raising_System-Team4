@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="TicketClassLibrary/TicketClassLibrary.csproj" />
   <Project Path="TicketWebApi/TicketWebApi.csproj" />
-  <Project Path="UserLibrary/UserLibrary.csproj" />
+
 </Solution>
