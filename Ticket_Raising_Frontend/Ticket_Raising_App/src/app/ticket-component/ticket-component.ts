@@ -1,114 +1,142 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+ 
 import { TicketService } from '../ticket-service';
 import { Ticket } from '../../Models/Ticket';
  
+import { EmployeeService } from '../employee-service';
+import { Employee } from '../../Models/Employee';
+ 
+import { TicketTypeService } from '../tickettype-service';
+import { TicketType } from '../../Models/TicketType';
+ 
 @Component({
   selector: 'app-ticket-component',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './ticket-component.html',
-  styleUrl: './ticket-component.css',
+  styleUrls: ['./ticket-component.css'],
 })
-export class TicketComponent {
+export class TicketComponent implements OnInit {
  
-  TicketSvc: TicketService = inject(TicketService);
+  ticketSvc = inject(TicketService);
+  employeeSvc = inject(EmployeeService);
+  ticketTypeSvc = inject(TicketTypeService);
  
-  ticket: Ticket;
-  tickets: Ticket[];
-  errMsg: string;
+  ticket: Ticket = new Ticket();
+  tickets: Ticket[] = [];
  
-  constructor() {
-    this.tickets = [];
-    this.errMsg = "";
+  employees: Employee[] = [];
+  ticketTypes: TicketType[] = [];
+ 
+  errMsg: string = '';
+ 
+  ngOnInit() {
+    this.loadEmployees();
+    this.loadTicketTypes();
     this.showAllTickets();
-    this.ticket = new Ticket("", "", "", "", "", "", null, null);
   }
  
+  /* ---------- LOAD DROPDOWNS ---------- */
+ 
+  loadEmployees() {
+    this.employeeSvc.getAllEmployees().subscribe({
+      next: data => this.employees = data,
+      error: err => this.errMsg = err.error
+    });
+  }
+ 
+  loadTicketTypes() {
+    this.ticketTypeSvc.getAllTicketTypes().subscribe({
+      next: data => this.ticketTypes = data,
+      error: err => this.errMsg = err.error
+    });
+  }
+ 
+  /* ---------- CRUD ---------- */
+ 
   newTicket() {
-    this.ticket = new Ticket("", "", "", "", "", "", null, null);
+    this.ticket = new Ticket();
+    this.errMsg = '';
   }
  
   showAllTickets() {
-    this.TicketSvc.getAllTickets().subscribe({
-      next: (response: any) => {
-        this.tickets = response;
-        this.errMsg = "";
-      },
-      error: (err) => this.errMsg = err.error
+    this.ticketSvc.getAllTickets().subscribe({
+      next: data => this.tickets = data,
+      error: err => this.errMsg = err.error
     });
   }
  
   addTicket() {
-    this.TicketSvc.addTicket(this.ticket).subscribe({
-      next: (response: any) => {
-        alert("New ticket added");
-        this.errMsg = "";
+    this.ticketSvc.addTicket(this.ticket).subscribe({
+      next: () => {
+        alert('Ticket added');
         this.showAllTickets();
+        this.newTicket();
       },
-      error: (err) => this.errMsg = err.error
+      error: err => this.errMsg = err.error
     });
   }
  
   showTicket() {
-    this.TicketSvc.getTicket(this.ticket.ticketId).subscribe({
-      next: (response: any) => {
-        this.ticket = response;
-        this.errMsg = "";
-      },
-      error: (err) => this.errMsg = err.error
+    this.ticketSvc.getTicket(this.ticket.ticketId).subscribe({
+      next: data => this.ticket = data,
+      error: err => this.errMsg = err.error
     });
   }
  
   updateTicket() {
-    this.TicketSvc.updateTicket(this.ticket.ticketId, this.ticket).subscribe({
-      next: (response: any) => {
-        alert("Ticket details updated");
-        this.errMsg = "";
+    this.ticketSvc.updateTicket(this.ticket.ticketId, this.ticket).subscribe({
+      next: () => {
+        alert('Ticket updated');
         this.showAllTickets();
       },
-      error: (err) => this.errMsg = err.error
+      error: err => this.errMsg = err.error
     });
   }
  
   deleteTicket() {
-    this.TicketSvc.deleteTicket(this.ticket.ticketId).subscribe({
-      next: (response: any) => {
-        alert("Ticket deleted");
-        this.errMsg = "";
+    this.ticketSvc.deleteTicket(this.ticket.ticketId).subscribe({
+      next: () => {
+        alert('Ticket deleted');
         this.showAllTickets();
+        this.newTicket();
       },
-      error: (err) => this.errMsg = err.error
+      error: err => this.errMsg = err.error
     });
   }
  
+  /* ---------- SEARCH ---------- */
+ 
   showTicketsByEmployee() {
-    this.TicketSvc.getTicketsByEmployee(this.ticket.empId).subscribe({
-      next: (response: any) => {
-        this.tickets = response;
-        this.errMsg = "";
-      },
-      error: (err) => this.errMsg = err.error
+    if (!this.ticket.empId) {
+      this.errMsg = 'Select Employee';
+      return;
+    }
+ 
+    this.ticketSvc.getTicketsByEmployee(this.ticket.empId).subscribe({
+      next: data => this.tickets = data,
+      error: err => this.errMsg = err.error
     });
   }
  
   showTicketsByStatus() {
-    this.TicketSvc.getTicketsByStatus(this.ticket.status).subscribe({
-      next: (response: any) => {
-        this.tickets = response;
-        this.errMsg = "";
-      },
-      error: (err) => this.errMsg = err.error
+    this.ticketSvc.getTicketsByStatus(this.ticket.status).subscribe({
+      next: data => this.tickets = data,
+      error: err => this.errMsg = err.error
     });
   }
  
   showTicketsByType() {
-    this.TicketSvc.getTicketsByType(this.ticket.ticketTypeId).subscribe({
-      next: (response: any) => {
-        this.tickets = response;
-        this.errMsg = "";
-      },
-      error: (err) => this.errMsg = err.error
+    if (!this.ticket.ticketTypeId) {
+      this.errMsg = 'Select Ticket Type';
+      return;
+    }
+ 
+    this.ticketSvc.getTicketsByType(this.ticket.ticketTypeId).subscribe({
+      next: data => this.tickets = data,
+      error: err => this.errMsg = err.error
     });
   }
 }
