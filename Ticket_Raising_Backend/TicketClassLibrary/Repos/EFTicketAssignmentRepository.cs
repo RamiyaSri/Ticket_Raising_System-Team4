@@ -19,11 +19,19 @@ public class EFTicketAssignmentRepository : ITicketAssignmentRepository
         {
             SqlException sqlException = ex.InnerException as SqlException;
             int errorNumber = sqlException.Number;
+            if (ex.InnerException.Message.Contains("The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_TicketAssignment_Ticket_TicketId\""))
+                errorNumber = 700;
+            else if (ex.InnerException.Message.Contains("The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_TicketAssignment_Employee_Support_Emp_Id\""))
+                errorNumber = 701;
  
             switch (errorNumber)
             {
                 case 2627:
                     throw new TicketException("Details already exists", 501);
+                case 700:
+                    throw new TicketException("Given Ticket ID Not Found",502);
+                case 701:
+                    throw new TicketException("Given Support Employee ID Not Found",503);
                 default:
                     throw new TicketException(sqlException.Message, 599);
             }
