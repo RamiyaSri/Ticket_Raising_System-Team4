@@ -35,18 +35,21 @@ export class TicketAssignmentComponent {
         this.assignments = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
   addAssignment() {
     this.assignmentSvc.addAssignment(this.assignment).subscribe({
       next: () => {
+        //console.log(this.assignment.supportEmpId)
         alert("Ticket Assignment added");
         this.errMsg = "";
         this.showAllAssignments();
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => {this.errMsg = err.error;
+                //console.log(this.assignment.supportEmpId)
+      }
     });
   }
  
@@ -56,7 +59,7 @@ export class TicketAssignmentComponent {
         this.assignment = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -69,7 +72,7 @@ export class TicketAssignmentComponent {
           this.errMsg = "";
           this.showAllAssignments();
         },
-        error: (err) => this.errMsg = err.message
+        error: (err) => this.errMsg = err.error
       });
   }
  
@@ -82,7 +85,7 @@ export class TicketAssignmentComponent {
           this.errMsg = "";
           this.showAllAssignments();
         },
-        error: (err) => this.errMsg = err.message
+        error: (err) => this.errMsg = err.error
       });
   }
  
@@ -94,19 +97,19 @@ export class TicketAssignmentComponent {
           this.assignments = response;
           this.errMsg = "";
         },
-        error: (err) => this.errMsg = err.message
+        error: (err) => this.errMsg = err.error
       });
   }
  
   showAssignmentsBySupportEmployee() {
     this.assignmentSvc
-      .getAssignmentsBySupportEmployee(this.assignment.supportEmpId)
+      .getAssignmentsBySupportEmployee(this.assignment.Support_Emp_Id)
       .subscribe({
         next: (response: any) => {
           this.assignments = response;
           this.errMsg = "";
         },
-        error: (err) => this.errMsg = err.message
+        error: (err) => this.errMsg = err.error
       });
   }
 }

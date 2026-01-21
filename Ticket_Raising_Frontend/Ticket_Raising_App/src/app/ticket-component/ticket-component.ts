@@ -35,7 +35,7 @@ export class TicketComponent {
         this.tickets = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -46,7 +46,7 @@ export class TicketComponent {
         this.errMsg = "";
         this.showAllTickets();
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -56,7 +56,7 @@ export class TicketComponent {
         this.ticket = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -67,7 +67,7 @@ export class TicketComponent {
         this.errMsg = "";
         this.showAllTickets();
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -78,7 +78,7 @@ export class TicketComponent {
         this.errMsg = "";
         this.showAllTickets();
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -88,7 +88,7 @@ export class TicketComponent {
         this.tickets = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -98,7 +98,7 @@ export class TicketComponent {
         this.tickets = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -108,7 +108,7 @@ export class TicketComponent {
         this.tickets = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
 }

@@ -38,7 +38,7 @@ export class EmployeeComponent {
         this.employees = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -48,7 +48,7 @@ export class EmployeeComponent {
         this.employee = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -59,7 +59,7 @@ export class EmployeeComponent {
         this.errMsg = "";
         this.showAllEmployees();
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
  
@@ -72,7 +72,7 @@ export class EmployeeComponent {
         this.showAllEmployees();
         this.newEmployee();
       },
-      error: (err) => this.errMsg = err.message
+      error: (err) => this.errMsg = err.error
     });
   }
 }

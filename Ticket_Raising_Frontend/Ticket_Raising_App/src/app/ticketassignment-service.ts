@@ -11,7 +11,7 @@ export class TicketAssignmentService {
   http: HttpClient = inject(HttpClient);
   httpOptions: { headers: HttpHeaders };
   token: string | null;
-  baseUrl: string = "http://localhost:5175/api/TicketAssignments/";
+  baseUrl: string = "http://localhost:5175/api/TicketAssignments";
  
   constructor() {
     this.token = sessionStorage.getItem("token");
@@ -23,6 +23,8 @@ export class TicketAssignmentService {
   }
  
   addAssignment(assignment: TicketAssignment): Observable<TicketAssignment> {
+    //console.log("This is service class "+assignment.supportEmpId);
+    
     return this.http.post<TicketAssignment>(this.baseUrl, assignment, this.httpOptions);
   }
  

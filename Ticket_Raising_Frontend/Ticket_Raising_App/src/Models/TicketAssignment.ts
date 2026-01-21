@@ -1,7 +1,7 @@
 export class TicketAssignment {
     public assignmentId: string;
     public ticketId: string;
-    public supportEmpId: string;
+    public Support_Emp_Id: string;
     public assignmentDate: Date;
  
     constructor(
@@ -12,7 +12,7 @@ export class TicketAssignment {
     ) {
         this.assignmentId = assignmentId;
         this.ticketId = ticketId;
-        this.supportEmpId = supportEmpId;
+        this.Support_Emp_Id = supportEmpId;
         this.assignmentDate = assignmentDate;
     }
 }
