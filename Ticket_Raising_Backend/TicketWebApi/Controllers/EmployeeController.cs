@@ -7,7 +7,6 @@ namespace TicketWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class EmployeesController : ControllerBase
     {
         IEmployeeRepository employeeRepo;
@@ -16,6 +15,7 @@ namespace TicketWebApi.Controllers
             employeeRepo = empRepository;
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(200)]
         public async Task<ActionResult> GetAll()
@@ -24,6 +24,7 @@ namespace TicketWebApi.Controllers
             return Ok(employees);
         }
 
+        [Authorize]
         [HttpGet("{empId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -59,6 +60,7 @@ namespace TicketWebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{empId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
@@ -81,6 +83,7 @@ namespace TicketWebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{empId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
@@ -99,9 +102,8 @@ namespace TicketWebApi.Controllers
         }
 
         [HttpPost("login")]
-        [AllowAnonymous]
         [ProducesResponseType(200)]
-        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult> Login(string empId, string password)
         {
             try
@@ -111,7 +113,7 @@ namespace TicketWebApi.Controllers
             }
             catch (TicketException ex)
             {
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
         }
     }

@@ -7,8 +7,8 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-ticket-priority-component',
   imports: [CommonModule, FormsModule],
-  templateUrl: './ticket-priority-component.html',
-  styleUrl: './ticket-priority-component.css',
+  templateUrl: './ticketpriority-component.html',
+  styleUrl: './ticketpriority-component.css',
 })
 export class TicketPriorityComponent {
  

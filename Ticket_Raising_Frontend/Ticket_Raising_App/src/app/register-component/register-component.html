@@ -1,0 +1,69 @@
+<div class="container mt-5">
+<div class="row justify-content-center">
+ 
+    <div class="col-md-5">
+<div class="card p-5 shadow-lg text-white border border-light rounded-4"
+           style="background-color: rgba(0,0,0,0.3);">
+ 
+        <h2 class="text-glow text-center mb-4">Employee Registration</h2>
+ 
+        <div class="mb-3">
+<label>Employee ID</label>
+<input type="text" class="form-control galaxy-input"
+                 [(ngModel)]="employee.empId" />
+</div>
+ 
+        <div class="mb-3">
+<label>First Name</label>
+<input type="text" class="form-control galaxy-input"
+                 [(ngModel)]="employee.firstName" />
+</div>
+ 
+        <div class="mb-3">
+<label>Last Name</label>
+<input type="text" class="form-control galaxy-input"
+                 [(ngModel)]="employee.lastName" />
+</div>
+ 
+        <div class="mb-3">
+<label>Email</label>
+<input type="email" class="form-control galaxy-input"
+                 [(ngModel)]="employee.email" />
+</div>
+ 
+        <div class="mb-3">
+<label>Password</label>
+<input type="password" class="form-control galaxy-input"
+                 [(ngModel)]="employee.password" />
+</div>
+ 
+        <div class="mb-3">
+<label>Role</label>
+<select class="form-select galaxy-input"
+                  [(ngModel)]="employee.role">
+<option value="">Select Role</option>
+<option value="Admin">Admin</option>
+<option value="User">User</option>
+<option value="Supporter">Supporter</option>
+</select>
+</div>
+ 
+        <div class="mb-3">
+<label>Phone Number</label>
+<input type="text" class="form-control galaxy-input"
+                 [(ngModel)]="employee.phoneNumber" />
+</div>
+ 
+        <div class="d-flex gap-2">
+<button class="btn btn-success glow-btn w-50"
+                  (click)="register()">Register</button>
+<button class="btn btn-secondary glow-btn w-50"
+                  (click)="resetForm()">Reset</button>
+</div>
+ 
+        <p class="text-danger mt-3 text-center">{{ errMsg }}</p>
+</div>
+</div>
+ 
+  </div>
+</div>
