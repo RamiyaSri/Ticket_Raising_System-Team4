@@ -1,0 +1,136 @@
+<div class="container mt-4">
+<div class="row">
+
+<div class="col-md-5 mb-4">
+<div class="card p-5 shadow-lg text-white border border-light rounded-4"
+           style="background-color: rgba(0, 0, 0, 0.3);">
+ 
+        <h2 class="text-glow">Ticket Form</h2>
+ 
+        <button class="btn btn-secondary mb-3 glow-btn w-100"
+                (click)="newTicket()">New</button>
+ 
+        <div class="mb-3">
+<label>Ticket ID</label>
+<div class="d-flex gap-2">
+<input type="text"
+                   class="form-control galaxy-input"
+                   [(ngModel)]="ticket.ticketId"
+                   name="ticketId" />
+<button class="btn btn-primary glow-btn"
+                    (click)="showTicket()">Show</button>
+</div>
+</div>
+ 
+        <div class="mb-3">
+<label>Employee ID</label>
+<div class="d-flex gap-2">
+<input type="text"
+                   class="form-control galaxy-input"
+                   [(ngModel)]="ticket.empId"
+                   name="empId" />
+<button class="btn btn-primary glow-btn"
+                    (click)="showTicketsByEmployee()">Search</button>
+</div>
+</div>
+ 
+        <div class="mb-3">
+<label>Subject</label>
+<input type="text"
+                 class="form-control galaxy-input"
+                 [(ngModel)]="ticket.subject"
+                 name="subject" />
+</div>
+ 
+        <div class="mb-3">
+<label>Description</label>
+<input type="text"
+                 class="form-control galaxy-input"
+                 [(ngModel)]="ticket.description"
+                 name="description" />
+</div>
+ 
+        <div class="mb-3">
+<label>Status</label>
+<div class="d-flex gap-2">
+<select class="form-select galaxy-input"
+                    [(ngModel)]="ticket.status"
+                    name="status">
+<option value="Open">Open</option>
+<option value="In Progress">In Progress</option>
+<option value="Resolved">Resolved</option>
+<option value="Closed">Closed</option>
+</select>
+<button class="btn btn-primary glow-btn"
+                    (click)="showTicketsByStatus()">Search</button>
+</div>
+</div>
+ 
+        <div class="mb-3">
+<label>Ticket Type ID</label>
+<div class="d-flex gap-2">
+<input type="text"
+                   class="form-control galaxy-input"
+                   [(ngModel)]="ticket.ticketTypeId"
+                   name="ticketTypeId" />
+<button class="btn btn-primary glow-btn"
+                    (click)="showTicketsByType()">Search</button>
+</div>
+</div>
+ 
+        <div class="mb-3">
+<label>Resolution Date</label>
+<input type="datetime-local"
+                 class="form-control galaxy-input"
+                 [(ngModel)]="ticket.resolutionDate"
+                 name="resolutionDate" />
+</div>
+ 
+        <div class="mt-3 d-flex gap-2 flex-wrap">
+<button class="btn btn-success glow-btn"
+                  (click)="addTicket()">Add</button>
+<button class="btn btn-warning glow-btn"
+                  (click)="updateTicket()">Update</button>
+<button class="btn btn-danger glow-btn"
+                  (click)="deleteTicket()">Delete</button>
+</div>
+ 
+        <p class="text-danger mt-2">{{ errMsg }}</p>
+</div>
+</div>
+
+<div class="col-md-7 mb-4">
+<div class="card galaxy-card p-4">
+<h2 class="text-glow">List of Tickets</h2>
+ 
+        <table class="table table-bordered table-striped galaxy-table mt-3">
+<thead class="table-dark text-glow">
+<tr>
+<th>Ticket ID</th>
+<th>Employee ID</th>
+<th>Subject</th>
+<th>Status</th>
+<th>Type</th>
+<th>Created</th>
+<th>Resolved</th>
+</tr>
+</thead>
+<tbody>
+            @for (t of tickets; track t.ticketId) {
+<tr>
+<td>{{ t.ticketId }}</td>
+<td>{{ t.empId }}</td>
+<td>{{ t.subject }}</td>
+<td>{{ t.status }}</td>
+<td>{{ t.ticketTypeId }}</td>
+<td>{{ t.creationDate | date:'short' }}</td>
+<td>{{ t.resolutionDate | date:'short' }}</td>
+</tr>
+            }
+</tbody>
+</table>
+</div>
+</div>
+ 
+  </div>
+</div>
