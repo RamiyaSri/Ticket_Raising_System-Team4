@@ -8,11 +8,11 @@ namespace TicketWebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class TicketController : ControllerBase
+    public class TicketsController : ControllerBase
     {
         ITicketRepository ticketRepository;
 
-        public TicketController(ITicketRepository ticketRepository)
+        public TicketsController(ITicketRepository ticketRepository)
         {
             this.ticketRepository = ticketRepository;
         }

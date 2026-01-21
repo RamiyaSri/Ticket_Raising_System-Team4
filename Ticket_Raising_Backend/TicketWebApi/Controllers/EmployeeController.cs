@@ -95,6 +95,7 @@ namespace TicketWebApi.Controllers
             {
                 return NotFound(ex.Message);
             }
+            
         }
     }
 }
