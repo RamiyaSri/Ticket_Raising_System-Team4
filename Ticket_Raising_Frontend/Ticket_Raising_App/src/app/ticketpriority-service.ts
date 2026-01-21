@@ -3,49 +3,61 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TicketPriority } from '../Models/TicketPriority';
  
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class TicketPriorityService {
  
-  http: HttpClient = inject(HttpClient);
-  httpOptions;
-  token;
-  baseUrl: string = "http://localhost:5175/api/TicketPriorities/";   
+  private http = inject(HttpClient);
+  private readonly baseUrl = 'http://localhost:5175/api/TicketPriorities/';
  
-  constructor() {
-    this.token = sessionStorage.getItem("token");
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer ' + this.token
-      })
-    };
+  private getAuthHeaders(): HttpHeaders {
+    const token = sessionStorage.getItem('token') || '';
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
   }
-
+ 
   getAllPriorities(): Observable<TicketPriority[]> {
-    return this.http.get<TicketPriority[]>(this.baseUrl, this.httpOptions);
+    return this.http.get<TicketPriority[]>(
+      this.baseUrl,
+      { headers: this.getAuthHeaders() }
+    );
   }
-
-  addPriority(priority: TicketPriority): Observable<TicketPriority> {
-    return this.http.post<TicketPriority>(this.baseUrl, priority, this.httpOptions);
-  }
-
+ 
   getPriority(priorityId: string): Observable<TicketPriority> {
-    return this.http.get<TicketPriority>(this.baseUrl + priorityId, this.httpOptions);
+    return this.http.get<TicketPriority>(
+      this.baseUrl + encodeURIComponent(priorityId),
+      { headers: this.getAuthHeaders() }
+    );
   }
-
+ 
+  addPriority(priority: TicketPriority): Observable<TicketPriority> {
+    return this.http.post<TicketPriority>(
+      this.baseUrl,
+      priority,
+      { headers: this.getAuthHeaders() }
+    );
+  }
+ 
   updatePriority(priorityId: string, priority: TicketPriority): Observable<TicketPriority> {
-    return this.http.put<TicketPriority>(this.baseUrl + priorityId, priority, this.httpOptions);
+    return this.http.put<TicketPriority>(
+      this.baseUrl + encodeURIComponent(priorityId),
+      priority,
+      { headers: this.getAuthHeaders() }
+    );
   }
  
   deletePriority(priorityId: string): Observable<any> {
-    return this.http.delete(this.baseUrl + priorityId, this.httpOptions);
+    return this.http.delete<any>(
+      this.baseUrl + encodeURIComponent(priorityId),
+      { headers: this.getAuthHeaders() }
+    );
   }
  
   getPriorityByLevel(priorityLevel: string): Observable<TicketPriority> {
     return this.http.get<TicketPriority>(
-      this.baseUrl + "level/" + priorityLevel,
-      this.httpOptions
+      this.baseUrl + 'level/' + encodeURIComponent(priorityLevel),
+      { headers: this.getAuthHeaders() }
     );
   }
 }

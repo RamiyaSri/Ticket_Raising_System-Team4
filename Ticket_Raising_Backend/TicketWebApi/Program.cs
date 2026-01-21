@@ -4,10 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using TicketClassLibrary.Repos;
 
-var builder = WebApplication.CreateBuilder(args);
-
+var builder = WebApplication.CreateBuilder(args); 
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddScoped<ITicketPriorityRepository, EFTicketPriorityRepository>();
 builder.Services.AddScoped<ITicketRepository, EFTicketRepository>();
@@ -15,7 +13,11 @@ builder.Services.AddScoped<ITicketTypeRepository, EFTicketTypeRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EFEmployeeRepository>();
 builder.Services.AddScoped<ITicketAssignmentRepository, EFTicketAssignmentRepository>();
 builder.Services.AddScoped<ITicketCommentRepository, EFTicketCommentRepository>();
-
+builder.Services.AddCors(options=>options.AddPolicy("MyPolicy",policy=>policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+ 
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -61,6 +63,7 @@ builder.Services.AddAuthentication(options =>
                 )
         };
 });
+ 
 var app = builder.Build();
  
 // Configure the HTTP request pipeline.

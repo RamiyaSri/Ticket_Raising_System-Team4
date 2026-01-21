@@ -1,11 +1,127 @@
-import { Component } from '@angular/core';
-
+import { Component, inject } from '@angular/core';
+import { TicketCommentService } from '../ticketcomment-service';
+import { TicketComment } from '../../Models/TicketComment';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+ 
 @Component({
-  selector: 'app-ticketcomment-component',
-  imports: [],
+  selector: 'app-ticket-comment-component',
+  imports: [CommonModule, FormsModule],
   templateUrl: './ticketcomment-component.html',
   styleUrl: './ticketcomment-component.css',
 })
-export class TicketcommentComponent {
-
+export class TicketCommentComponent {
+ 
+  ticketCommentSvc: TicketCommentService = inject(TicketCommentService);
+ 
+  ticketComments: TicketComment[];
+  ticketComment: TicketComment;
+  errMsg: string;
+ 
+  empId: string;
+  supportEmpId: string;
+  ticketId: string;
+ 
+  constructor() {
+    this.ticketComments = [];
+    this.ticketComment = new TicketComment("", "", "", "", "", new Date());
+    this.errMsg = "";
+ 
+    this.empId = "";
+    this.supportEmpId = "";
+    this.ticketId = "";
+ 
+    this.showAllComments();
+  }
+ 
+  showAllComments() {
+    this.ticketCommentSvc.getAllComments().subscribe({
+      next: (response: any) => {
+        this.ticketComments = response;
+        console.log(response);
+        this.errMsg = "";
+      },
+      error: (err) => {
+        this.errMsg = err.message;
+        console.log(err);
+      }
+    });
+  }
+ 
+  saveComment() {
+    this.ticketCommentSvc.addComment(this.ticketComment).subscribe({
+      next: (response: any) => {
+        alert("New Comment added");
+        this.errMsg = "";
+        this.showAllComments();
+      },
+      error: (err) => this.errMsg = err.error
+    });
+  }
+ 
+  newComment() {
+    this.ticketComment = new TicketComment("", "", "", "", "", new Date());
+  }
+ 
+  showComment() {
+    this.ticketCommentSvc.getComment(this.ticketComment.commentId).subscribe({
+      next: (response: any) => {
+        this.ticketComment = response;
+        this.errMsg = "";
+      },
+      error: (err) => this.errMsg = err.error
+    });
+  }
+ 
+  updateComment() {
+    this.ticketCommentSvc.updateComment(this.ticketComment.commentId, this.ticketComment).subscribe({
+      next: (response: any) => {
+        alert("Comment updated successfully");
+        this.errMsg = "";
+        this.showAllComments();
+      },
+      error: (err) => this.errMsg = err.error
+    });
+  }
+ 
+  deleteComment() {
+    this.ticketCommentSvc.deleteComment(this.ticketComment.commentId).subscribe({
+      next: (response: any) => {
+        alert("Comment deleted successfully");
+        this.errMsg = "";
+        this.showAllComments();
+      },
+      error: (err) => this.errMsg = err.error
+    });
+  }
+ 
+  showCommentsByEmployee() {
+    this.ticketCommentSvc.getCommentsByEmployee(this.empId).subscribe({
+      next: (response: any) => {
+        this.ticketComments = response;
+        this.errMsg = "";
+      },
+      error: (err) => this.errMsg = err.error
+    });
+  }
+ 
+  showCommentsBySupportEmployee() {
+    this.ticketCommentSvc.getCommentsBySupportEmployee(this.supportEmpId).subscribe({
+      next: (response: any) => {
+        this.ticketComments = response;
+        this.errMsg = "";
+      },
+      error: (err) => this.errMsg = err.error
+    });
+  }
+ 
+  showCommentsByTicket() {
+    this.ticketCommentSvc.getCommentsByTicket(this.ticketId).subscribe({
+      next: (response: any) => {
+        this.ticketComments = response;
+        this.errMsg = "";
+      },
+      error: (err) => this.errMsg = err.error
+    });
+  }
 }

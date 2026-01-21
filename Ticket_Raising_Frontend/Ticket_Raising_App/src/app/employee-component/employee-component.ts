@@ -1,11 +1,78 @@
-import { Component } from '@angular/core';
-
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { EmployeeService } from '../employee-service';
+import { Employee } from '../../Models/Employee';
+ 
 @Component({
   selector: 'app-employee-component',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './employee-component.html',
   styleUrl: './employee-component.css',
 })
 export class EmployeeComponent {
+ 
+  EmployeeSvc: EmployeeService = inject(EmployeeService);
+ 
+  employee: Employee;
+  employees: Employee[];
+  errMsg: string;
+ 
+  constructor() {
+    this.employees = [];
+    this.errMsg = "";
+    this.employee = new Employee();
+    this.showAllEmployees();
+  }
+ 
 
+  newEmployee() {
+    this.employee = new Employee();
+    this.errMsg = "";
+  }
+ 
+
+  showAllEmployees() {
+    this.EmployeeSvc.getAllEmployees().subscribe({
+      next: (response: any) => {
+        this.employees = response;
+        this.errMsg = "";
+      },
+      error: (err) => this.errMsg = err.message
+    });
+  }
+ 
+  showEmployee() {
+    this.EmployeeSvc.getEmployee(this.employee.empId).subscribe({
+      next: (response: any) => {
+        this.employee = response;
+        this.errMsg = "";
+      },
+      error: (err) => this.errMsg = err.message
+    });
+  }
+ 
+  updateEmployee() {
+    this.EmployeeSvc.updateEmployee(this.employee.empId, this.employee).subscribe({
+      next: () => {
+        alert("Employee details updated");
+        this.errMsg = "";
+        this.showAllEmployees();
+      },
+      error: (err) => this.errMsg = err.message
+    });
+  }
+ 
+
+  deleteEmployee() {
+    this.EmployeeSvc.deleteEmployee(this.employee.empId).subscribe({
+      next: () => {
+        alert("Employee deleted");
+        this.errMsg = "";
+        this.showAllEmployees();
+        this.newEmployee();
+      },
+      error: (err) => this.errMsg = err.message
+    });
+  }
 }
