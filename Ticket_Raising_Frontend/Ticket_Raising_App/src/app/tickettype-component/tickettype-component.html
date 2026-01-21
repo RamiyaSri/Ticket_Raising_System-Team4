@@ -37,20 +37,28 @@
                  [(ngModel)]="ticketType.description"
                  name="description" />
 </div>
- 
-<div class="mb-3">
-<label>Priority ID</label>
+ <div class="mb-3">
+<label>Priority</label>
 <div class="d-flex gap-2">
-<input type="text"
-           class="form-control galaxy-input"
-           [(ngModel)]="priorityId"
-           name="priorityId" />
-<button class="btn btn-primary glow-btn"
+<select class="form-select galaxy-input"
+            [(ngModel)]="priorityId"
+            name="priorityId">
+<option value="">-- Select Priority --</option>
+ 
+      @for (p of priorities; track p.priorityId) {
+<option [value]="p.priorityId">
+          {{ p.priorityId }}
+</option>
+      }
+</select>
+ 
+    <button class="btn btn-primary glow-btn"
             (click)="showTicketTypesByPriority()">
       Show By Priority
 </button>
 </div>
 </div>
+
  
         <div class="mt-3 d-flex gap-2 flex-wrap">
 <button class="btn btn-success glow-btn"
