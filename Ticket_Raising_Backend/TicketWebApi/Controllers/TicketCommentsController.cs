@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TicketClassLibrary.Models;
 using TicketClassLibrary.Repos;
@@ -7,6 +7,7 @@ namespace TicketWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TicketCommentsController : ControllerBase
     {
         ITicketCommentRepository ticketCommentRepository;
