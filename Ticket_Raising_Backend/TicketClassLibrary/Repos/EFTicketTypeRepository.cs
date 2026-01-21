@@ -50,22 +50,25 @@ public class EFTicketTypeRepository : ITicketTypeRepository
         }
     }
 
-    public async Task DeleteTicketTypeAsync(string ticketTypeId)
-    {
-        TicketType ticketTypeToDelete = await ticketDbContext.TicketTypes
-                .Include("Tickets")
-                .FirstOrDefaultAsync(ticketTypeEntity => ticketTypeEntity.TicketTypeId == ticketTypeId);
+  public async Task DeleteTicketTypeAsync(string ticketTypeId)
+{
+    TicketType ticketTypeToDelete = await ticketDbContext.TicketTypes
+        .Include(ticketType => ticketType.Tickets)
+        .FirstOrDefaultAsync(ticketTypeEntity => ticketTypeEntity.TicketTypeId == ticketTypeId);
 
-        if (ticketTypeToDelete.Tickets.Count == 0)
-        {
-            ticketDbContext.TicketTypes.Remove(ticketTypeToDelete);
-            await ticketDbContext.SaveChangesAsync();
-        }
-        else
-        {
-            throw new TicketException("Cannot delete Ticket Type with existing Tickets", 503);
-        }
+    if (ticketTypeToDelete == null)
+    {
+        throw new TicketException("Invalid Ticket Type ID. Ticket Type not found.", 404);
     }
+
+    if (ticketTypeToDelete.Tickets.Count != 0)
+    {
+        throw new TicketException("Cannot delete Ticket Type with existing Tickets", 503);
+
+    }
+    ticketDbContext.TicketTypes.Remove(ticketTypeToDelete);
+    await ticketDbContext.SaveChangesAsync();
+}
 
     public async Task<TicketType> GetTicketTypeAsync(string ticketTypeId)
     {

@@ -9,5 +9,6 @@ public interface IEmployeeRepository
     Task DeleteEmployeeAsync(string empId);
     Task<Employee> GetEmployeeAsync(string empId);
     Task<List<Employee>> GetAllEmployeesAsync();
+ 
 
 }
