@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TicketClassLibrary.Models;
@@ -8,7 +7,6 @@ namespace TicketWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class TicketCommentsController : ControllerBase
     {
         ITicketCommentRepository ticketCommentRepository;
@@ -24,7 +22,7 @@ namespace TicketWebApi.Controllers
             return Ok(ticketComments);
         }
 
-        [HttpGet("/ByEmpId/{empId}")]        
+        [HttpGet("/GetComments/ByEmpId/{empId}")]        
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetByEmpId(string empId)
@@ -38,9 +36,9 @@ namespace TicketWebApi.Controllers
             {
                 return NotFound(e.Message);
             }
-        }
+        }   
 
-        [HttpGet("/BySupportEmpId/{SupportEmpId}")]
+        [HttpGet("/GetComments/BySupportEmpId/{SupportEmpId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetBySupEmpId(string SupportEmpId)
@@ -56,7 +54,7 @@ namespace TicketWebApi.Controllers
             }
         }
 
-        [HttpGet("/ByTicketId/{ticketId}")]
+        [HttpGet("/GetComments/ByTicketId/{ticketId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetByTicket(string ticketId)
@@ -77,8 +75,16 @@ namespace TicketWebApi.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> GetOne(string commentId)
         {
-            TicketComment ticketComment = await ticketCommentRepository.GetCommentAsync(commentId);
-            return Ok(ticketComment);
+            try
+            {
+                TicketComment ticketComment = await ticketCommentRepository.GetCommentAsync(commentId);
+                return Ok(ticketComment);
+            }
+            catch(TicketException e)
+            {
+                return NotFound(e.Message);
+            }
+            
         }
 
         [HttpPost]
