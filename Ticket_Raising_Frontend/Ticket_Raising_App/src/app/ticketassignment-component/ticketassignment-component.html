@@ -55,9 +55,9 @@
 
                    class="form-control galaxy-input"
 
-                   [(ngModel)]="assignment.supportEmpId"
+                   [(ngModel)]="assignment.Support_Emp_Id"
 
-                   name="supportEmpId" />
+                   name="Support_Emp_Id" />
 <button class="btn btn-primary glow-btn"
 
                     (click)="showAssignmentsBySupportEmployee()">
@@ -114,7 +114,7 @@
 <tr>
 <td>{{ a.assignmentId }}</td>
 <td>{{ a.ticketId }}</td>
-<td>{{ a.supportEmpId }}</td>
+<td>{{ a.Support_Emp_Id }}</td>
 <td>{{ a.assignmentDate | date:'short' }}</td>
 </tr>
 

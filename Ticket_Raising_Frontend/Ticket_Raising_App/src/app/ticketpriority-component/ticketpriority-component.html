@@ -55,17 +55,26 @@
 </div>
  
 <div class="mb-3">
-<label>Search By Priority Level</label>
-<div class="d-flex gap-2">
-<input type="text"
-                   class="form-control galaxy-input"
-                   [(ngModel)]="priorityLevel"
-                   name="priorityLevelSearch" />
-<button class="btn btn-primary glow-btn"
-                    (click)="showPriorityByLevel()">Search</button>
+  <label>Priority Level</label>
+  <div class="d-flex gap-2">
+    <select
+      class="form-select galaxy-input"
+      [(ngModel)]="priorityLevel"
+      name="priorityLevel">
+      <option value="">-- Select Priority Level --</option>
+      <option value="Low">Low</option>
+      <option value="Medium">Medium</option>
+      <option value="High">High</option>
+    </select>
+
+    <button
+      class="btn btn-primary glow-btn"
+      (click)="showPriorityByLevel()">
+      Show By Priority Level
+    </button>
+  </div>
 </div>
-</div>
- 
+
         <div class="mt-3 d-flex gap-2 flex-wrap">
 <button class="btn btn-success glow-btn"
                   (click)="savePriority()">Add</button>

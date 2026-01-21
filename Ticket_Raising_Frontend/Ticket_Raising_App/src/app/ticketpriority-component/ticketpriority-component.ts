@@ -87,13 +87,20 @@ export class TicketPriorityComponent {
     });
   }
  
-  showPriorityByLevel() {
-    this.prioritySvc.getPriorityByLevel(this.priorityLevel).subscribe({
-      next: (response: any) => {
-        this.priority = response;
-        this.errMsg = "";
-      },
-      error: (err) => this.errMsg = err.error
-    });
-  }
+showPriorityByLevel() {
+  console.log("Priority Level entered:", this.priorityLevel);
+
+  this.prioritySvc.getPriorityByLevel(this.priorityLevel).subscribe({
+    next: (response: any) => {
+      console.log("Response from API:", response);
+      this.priorities = response; 
+      this.errMsg = "";
+    },
+    error: (err) => {
+      console.log("API Error:", err);
+      this.errMsg = err.error;
+    }
+  });
+}
+
 }

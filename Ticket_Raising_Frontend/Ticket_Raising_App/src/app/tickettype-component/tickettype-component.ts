@@ -87,15 +87,21 @@ export class TicketTypeComponent {
     });
   }
  
-  showTicketTypesByPriority() {
-    this.ticketTypeSvc.getTicketTypesByPriority(this.priorityId).subscribe({
-      next: (response: any) => {
-        this.ticketTypes = response;
-        this.errMsg = "";
-      },
-      error: (err) => this.errMsg = err.error
-    });
-  }
+showTicketTypesByPriority() {
+  console.log("Priority Id entered:", this.priorityId);
+ 
+  this.ticketTypeSvc.getTicketTypesByPriority(this.priorityId).subscribe({
+    next: (response: any) => {
+      console.log("Response from API:", response);
+      this.ticketTypes = response;
+      this.errMsg = "";
+    },
+    error: (err) => {
+      console.log("API Error:", err);
+      this.errMsg = err.error;
+    }
+  });
+}
 }
  
  
