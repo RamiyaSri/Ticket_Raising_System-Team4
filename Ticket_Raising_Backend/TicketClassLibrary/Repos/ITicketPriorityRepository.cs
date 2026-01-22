@@ -9,5 +9,5 @@ public interface ITicketPriorityRepository
     Task DeletePriorityAsync(string priorityId);
     Task<TicketPriority> GetPriorityAsync(string priorityId);
     Task<List<TicketPriority>> GetAllPrioritiesAsync();
-    Task<TicketPriority> GetPriorityByLevelAsync(string priorityLevel);
+    Task<List<TicketPriority>> GetPriorityByLevelAsync(string priorityLevel);
 }

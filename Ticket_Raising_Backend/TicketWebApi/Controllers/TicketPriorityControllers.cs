@@ -52,7 +52,7 @@ namespace TicketWebApi.Controllers
             {
                 await priorityRepo.AddPriorityAsync(priority);
                 return Created(
-                    $"api/priorities/{priority.PriorityId}",
+                    $"api/TicketPriorities/{priority.PriorityId}",
                     priority
                 );
             }
@@ -107,9 +107,9 @@ namespace TicketWebApi.Controllers
         {
             try
             {
-                TicketPriority priority =
+                List<TicketPriority> priorities =
                     await priorityRepo.GetPriorityByLevelAsync(priorityLevel);
-                return Ok(priority);
+                return Ok(priorities);
             }
             catch (TicketException ex)
             {

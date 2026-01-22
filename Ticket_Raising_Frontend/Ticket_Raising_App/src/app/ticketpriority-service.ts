@@ -54,10 +54,11 @@ export class TicketPriorityService {
     );
   }
  
-  getPriorityByLevel(priorityLevel: string): Observable<TicketPriority> {
-    return this.http.get<TicketPriority>(
-      this.baseUrl + 'level/' + encodeURIComponent(priorityLevel),
-      { headers: this.getAuthHeaders() }
-    );
-  }
+getPriorityByLevel(level: string): Observable<TicketPriority[]> {
+  return this.http.get<TicketPriority[]>(
+    `${this.baseUrl}level/${level}`,
+    { headers: this.getAuthHeaders() }
+  );
+}
+
 }

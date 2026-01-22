@@ -91,16 +91,19 @@ showPriorityByLevel() {
   console.log("Priority Level entered:", this.priorityLevel);
 
   this.prioritySvc.getPriorityByLevel(this.priorityLevel).subscribe({
-    next: (response: any) => {
+    next: (response: TicketPriority[]) => {
       console.log("Response from API:", response);
-      this.priorities = response; 
+      this.priorities = response;
       this.errMsg = "";
     },
     error: (err) => {
       console.log("API Error:", err);
       this.errMsg = err.error;
+      this.priorities = [];
     }
   });
 }
+
+
 
 }
