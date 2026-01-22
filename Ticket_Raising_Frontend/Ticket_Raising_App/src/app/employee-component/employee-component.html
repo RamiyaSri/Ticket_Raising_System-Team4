@@ -62,16 +62,13 @@
                      name="phoneNumber" />
             </div>
 
-            <!-- Role -->
+            <!-- Password -->
             <div class="mb-3">
-              <label>Role</label>
-              <select class="form-select galaxy-input"
-                      [(ngModel)]="employee.role"
-                      name="role">
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
-                <option value="Supporter">Supporter</option>
-              </select>
+              <label>Password</label>
+              <input type="text"
+                     class="form-control galaxy-input"
+                     [(ngModel)]="employee.password"
+                     name="password" />
             </div>
 
             <!-- Actions -->
@@ -104,6 +101,7 @@
                   <th>Last Name</th>
                   <th>Email</th>
                   <th>Role</th>
+                  <th>Password</th>
                   <th>Phone</th>
                 </tr>
               </thead>
@@ -115,6 +113,7 @@
                     <td>{{ e.lastName }}</td>
                     <td>{{ e.email }}</td>
                     <td>{{ e.role }}</td>
+                    <td>{{ e.password }}</td>
                     <td>{{ e.phoneNumber }}</td>
                   </tr>
                 }
