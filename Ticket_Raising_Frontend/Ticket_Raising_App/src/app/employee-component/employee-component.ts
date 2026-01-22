@@ -13,7 +13,8 @@ import { Employee } from '../../Models/Employee';
 export class EmployeeComponent {
  
   EmployeeSvc: EmployeeService = inject(EmployeeService);
- 
+  userName = sessionStorage.getItem("username");
+  role =sessionStorage.getItem("role");
   employee: Employee;
   employees: Employee[];
   errMsg: string;

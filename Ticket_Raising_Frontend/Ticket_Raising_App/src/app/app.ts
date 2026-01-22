@@ -12,8 +12,10 @@ import { CommonModule } from '@angular/common';
 export class App {
   protected readonly title = signal('Ticket_Raising_App');
   username;
+  role;
     constructor() {
         this.username=sessionStorage.getItem("username");
+        this.role = sessionStorage.getItem("role");
   }
  
 }

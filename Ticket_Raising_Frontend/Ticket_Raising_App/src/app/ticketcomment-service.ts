@@ -7,7 +7,7 @@ import { TicketComment } from '../Models/TicketComment';
 export class TicketCommentService {
  
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:5175/api/TicketComments/';
+  private readonly baseUrl = 'http://localhost:5175/';
  
   private getAuthHeaders(): HttpHeaders {
     const token = sessionStorage.getItem('token') || '';
@@ -19,21 +19,21 @@ export class TicketCommentService {
  
   getAllComments(): Observable<TicketComment[]> {
     return this.http.get<TicketComment[]>(
-      this.baseUrl,
+      this.baseUrl + "api/TicketComments/",
       { headers: this.getAuthHeaders() }
     );
   }
  
   getComment(commentId: string): Observable<TicketComment> {
     return this.http.get<TicketComment>(
-      this.baseUrl + encodeURIComponent(commentId),
+      this.baseUrl + "/api/TicketComments/" + encodeURIComponent(commentId),
       { headers: this.getAuthHeaders() }
     );
   }
  
   addComment(comment: TicketComment): Observable<TicketComment> {
     return this.http.post<TicketComment>(
-      this.baseUrl,
+      this.baseUrl + "/api/TicketComments/",
       comment,
       { headers: this.getAuthHeaders() }
     );
@@ -41,7 +41,7 @@ export class TicketCommentService {
  
   updateComment(commentId: string, comment: TicketComment): Observable<TicketComment> {
     return this.http.put<TicketComment>(
-      this.baseUrl + encodeURIComponent(commentId),
+      this.baseUrl + "/api/TicketComments/" + encodeURIComponent(commentId),
       comment,
       { headers: this.getAuthHeaders() }
     );
@@ -49,28 +49,28 @@ export class TicketCommentService {
  
   deleteComment(commentId: string): Observable<any> {
     return this.http.delete<any>(
-      this.baseUrl + encodeURIComponent(commentId),
+      this.baseUrl + "/api/TicketComments/" + encodeURIComponent(commentId),
       { headers: this.getAuthHeaders() }
     );
   }
  
   getCommentsByEmployee(empId: string): Observable<TicketComment[]> {
     return this.http.get<TicketComment[]>(
-      this.baseUrl + 'employee/' + encodeURIComponent(empId),
+      this.baseUrl + 'GetComments/ByEmpId/' + encodeURIComponent(empId),
       { headers: this.getAuthHeaders() }
     );
   }
  
   getCommentsBySupportEmployee(supportEmpId: string): Observable<TicketComment[]> {
     return this.http.get<TicketComment[]>(
-      this.baseUrl + 'supportEmployee/' + encodeURIComponent(supportEmpId),
+      this.baseUrl + 'GetComments/BySupportEmpId/' + encodeURIComponent(supportEmpId),
       { headers: this.getAuthHeaders() }
     );
   }
  
   getCommentsByTicket(ticketId: string): Observable<TicketComment[]> {
     return this.http.get<TicketComment[]>(
-      this.baseUrl + 'ticket/' + encodeURIComponent(ticketId),
+      this.baseUrl + "GetComments/ByTicketId/" + encodeURIComponent(ticketId),
       { headers: this.getAuthHeaders() }
     );
   }
