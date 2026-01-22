@@ -104,6 +104,7 @@ public class EFEmployeeRepository : IEmployeeRepository
             employee2Edit.FirstName = employee.FirstName;
             employee2Edit.LastName = employee.LastName;
             employee2Edit.Email = employee.Email;
+            employee2Edit.Password = employee.Password;
             employee2Edit.PhoneNumber = employee.PhoneNumber;
             employee2Edit.Role = employee.Role;
  
