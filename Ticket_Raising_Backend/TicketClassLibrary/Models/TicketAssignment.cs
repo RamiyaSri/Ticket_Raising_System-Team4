@@ -21,7 +21,7 @@ public class TicketAssignment
 
     [ForeignKey(nameof(Employee))]
     [Column(TypeName = "char(5)")]
-    [JsonPropertyName("supportEmpId")]
+    [JsonPropertyName("Support_Emp_Id")]
     [Required(ErrorMessage = "Support Employee ID is required.")]
     [StringLength(5, MinimumLength = 5, ErrorMessage = "Support Employee ID must be exactly 5 characters.")]
     public string Support_Emp_Id { get; set; }

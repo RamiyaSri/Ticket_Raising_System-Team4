@@ -23,7 +23,14 @@ export class TicketComponent implements OnInit {
   ticketSvc = inject(TicketService);
   employeeSvc = inject(EmployeeService);
   ticketTypeSvc = inject(TicketTypeService);
+  username;
+  role;
  
+  constructor(){
+    this.username = sessionStorage.getItem('username');
+    this.role = sessionStorage.getItem('role');
+  }
+
   ticket: Ticket = new Ticket();
   tickets: Ticket[] = [];
  
