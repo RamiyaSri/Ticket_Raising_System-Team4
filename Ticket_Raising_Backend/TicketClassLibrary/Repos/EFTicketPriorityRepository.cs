@@ -2,12 +2,11 @@ using TicketClassLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 
-
 namespace TicketClassLibrary.Repos;
 
 public class EFTicketPriorityRepository : ITicketPriorityRepository
 {
-    TicketDbContext context = new TicketDbContext();
+    private readonly TicketDbContext context = new TicketDbContext();
 
     public async Task AddPriorityAsync(TicketPriority priority)
     {
@@ -19,14 +18,14 @@ public class EFTicketPriorityRepository : ITicketPriorityRepository
         catch (DbUpdateException ex)
         {
             SqlException sqlException = ex.InnerException as SqlException;
-            int errorNumber = sqlException.Number;
+            int errorNumber = sqlException?.Number ?? 0;
 
             switch (errorNumber)
             {
                 case 2627:
                     throw new TicketException("Details already exists", 501);
                 default:
-                    throw new TicketException(sqlException.Message, 599);
+                    throw new TicketException(sqlException?.Message ?? "Database error", 599);
             }
         }
     }
@@ -47,41 +46,33 @@ public class EFTicketPriorityRepository : ITicketPriorityRepository
         catch (DbUpdateException ex)
         {
             SqlException sqlException = ex.InnerException as SqlException;
-            throw new TicketException(sqlException.Message, 599);
+            throw new TicketException(sqlException?.Message ?? "Database error", 599);
         }
     }
-      public async Task DeletePriorityAsync(string priorityId)
-{
-    TicketPriority priority2del =
-        await context.TicketPriorities
-                     .Include(p => p.TicketTypes)
-                     .FirstOrDefaultAsync(p => p.PriorityId == priorityId);
 
-    
-    if (priority2del == null)
+    public async Task DeletePriorityAsync(string priorityId)
     {
-        throw new TicketException("No such priority ID", 502);
+        TicketPriority priority2del =
+            await context.TicketPriorities
+                         .Include(p => p.TicketTypes)
+                         .FirstOrDefaultAsync(p => p.PriorityId == priorityId);
+
+        if (priority2del == null)
+            throw new TicketException("No such priority ID", 502);
+
+        if (priority2del.TicketTypes != null && priority2del.TicketTypes.Count > 0)
+            throw new TicketException("Cannot delete priority with existing ticket types", 503);
+
+        context.TicketPriorities.Remove(priority2del);
+        await context.SaveChangesAsync();
     }
-
-    
-    if (priority2del.TicketTypes != null && priority2del.TicketTypes.Count > 0)
-    {
-        throw new TicketException("Cannot delete priority with existing ticket types", 503);
-    }
-
-    context.TicketPriorities.Remove(priority2del);
-    await context.SaveChangesAsync();
-}
-
-     
 
     public async Task<TicketPriority> GetPriorityAsync(string priorityId)
     {
         try
         {
-            TicketPriority priority =
-                await context.TicketPriorities.FirstAsync(p => p.PriorityId == priorityId);
-            return priority;
+            return await context.TicketPriorities
+                .FirstAsync(p => p.PriorityId == priorityId);
         }
         catch
         {
@@ -91,22 +82,23 @@ public class EFTicketPriorityRepository : ITicketPriorityRepository
 
     public async Task<List<TicketPriority>> GetAllPrioritiesAsync()
     {
-        List<TicketPriority> priorities =
-            await context.TicketPriorities.ToListAsync();
-        return priorities;
+        return await context.TicketPriorities.ToListAsync();
     }
 
-    public async Task<TicketPriority> GetPriorityByLevelAsync(string priorityLevel)
+    public async Task<List<TicketPriority>> GetPriorityByLevelAsync(string priorityLevel)
     {
-        try
-        {
-            TicketPriority priority =
-                await context.TicketPriorities.FirstAsync(p => p.PriorityLevel == priorityLevel);
-            return priority;
-        }
-        catch
-        {
-            throw new TicketException("No such priority level", 502);
-        }
+    if (string.IsNullOrWhiteSpace(priorityLevel))
+        throw new TicketException("Priority level cannot be empty", 400);
+
+    List<TicketPriority> priorities =
+        await context.TicketPriorities
+            .Where(p => EF.Functions.Like(p.PriorityLevel, priorityLevel))
+            .ToListAsync();
+
+    if (priorities.Count == 0)
+        throw new TicketException("No such priority level", 404);
+
+    return priorities;
     }
+   
 }

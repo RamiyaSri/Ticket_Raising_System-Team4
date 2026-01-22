@@ -1,130 +1,81 @@
 <div class="container mt-4">
-<div class="row">
- 
-   
-<div class="col-md-5 mb-4">
-<div class="card p-5 shadow-lg text-white border border-light rounded-4"
+  <div class="row">
 
-           style="background-color: rgba(0, 0, 0, 0.3);">
- 
+    <div class="col-md-5 mb-4">
+      <div class="card p-5 shadow-lg text-white border border-light rounded-4" style="background-color: rgba(0, 0, 0, 0.3);">
         <h2 class="text-glow">Ticket Assignment Form</h2>
- 
-        <button class="btn btn-secondary mb-3 glow-btn w-100"
 
-                (click)="newAssignment()">New</button>
- 
+        <button class="btn btn-secondary mb-3 glow-btn w-100" (click)="newAssignment()">New</button>
+
         <div class="mb-3">
-<label>Assignment ID</label>
-<div class="d-flex gap-2">
-<input type="text"
+          <label>Assignment ID</label>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-control galaxy-input" [(ngModel)]="assignment.assignmentId" name="assignmentId" />
+            <button class="btn btn-primary glow-btn" (click)="showAssignment()">Show</button>
+          </div>
+        </div>
 
-                   class="form-control galaxy-input"
-
-                   [(ngModel)]="assignment.assignmentId"
-
-                   name="assignmentId" />
-<button class="btn btn-primary glow-btn"
-
-                    (click)="showAssignment()">Show</button>
-</div>
-</div>
- 
         <div class="mb-3">
-<label>Ticket ID</label>
-<div class="d-flex gap-2">
-<input type="text"
+          <label>Ticket</label>
+          <div class="d-flex gap-2">
+            <select class="form-select galaxy-input" [(ngModel)]="assignment.ticketId" name="ticketId">
+              <option value="">-- Select Ticket --</option>
+              <option *ngFor="let t of tickets" [value]="t.ticketId">{{ t.ticketId }}</option>
+            </select>
+            <button class="btn btn-primary glow-btn" (click)="showAssignmentsByTicket()">Search</button>
+          </div>
+        </div>
 
-                   class="form-control galaxy-input"
-
-                   [(ngModel)]="assignment.ticketId"
-
-                   name="ticketId" />
-<button class="btn btn-primary glow-btn"
-
-                    (click)="showAssignmentsByTicket()">
-
-              Show By Ticket
-</button>
-</div>
-</div>
- 
         <div class="mb-3">
-<label>Support Employee ID</label>
-<div class="d-flex gap-2">
-<input type="text"
+          <label>Support Employee</label>
+          <div class="d-flex gap-2">
+            <select class="form-select galaxy-input" [(ngModel)]="assignment.Support_Emp_Id" name="Support_Emp_Id">
+              <option value="">-- Select Employee --</option>
+              <option *ngFor="let e of employees" [value]="e.empId">{{ e.empId }} </option>
+            </select>
+            <button class="btn btn-primary glow-btn" (click)="showAssignmentsBySupportEmployee()">Search</button>
+          </div>
+        </div>
 
-                   class="form-control galaxy-input"
-
-                   [(ngModel)]="assignment.Support_Emp_Id"
-
-                   name="Support_Emp_Id" />
-<button class="btn btn-primary glow-btn"
-
-                    (click)="showAssignmentsBySupportEmployee()">
-
-              Show By Employee
-</button>
-</div>
-</div>
- 
         <div class="mb-3">
-<label>Assignment Date</label>
-<input type="datetime-local"
+          <label>Assignment Date</label>
+          <input type="datetime-local" class="form-control galaxy-input" [(ngModel)]="assignment.assignmentDate" name="assignmentDate" />
+        </div>
 
-                 class="form-control galaxy-input"
-
-                 [(ngModel)]="assignment.assignmentDate"
-
-                 name="assignmentDate" />
-</div>
- 
         <div class="mt-3 d-flex gap-2 flex-wrap">
-<button class="btn btn-success glow-btn"
+          <button class="btn btn-success glow-btn" (click)="addAssignment()">Add</button>
+          <button class="btn btn-warning glow-btn" (click)="updateAssignment()">Update</button>
+          <button class="btn btn-danger glow-btn" (click)="deleteAssignment()">Delete</button>
+        </div>
 
-                  (click)="addAssignment()">Add</button>
-<button class="btn btn-warning glow-btn"
-
-                  (click)="updateAssignment()">Update</button>
-<button class="btn btn-danger glow-btn"
-
-                  (click)="deleteAssignment()">Delete</button>
-</div>
- 
         <p class="text-danger mt-2">{{ errMsg }}</p>
-</div>
-</div>
- 
-   
-<div class="col-md-7 mb-4">
-<div class="card galaxy-card p-4">
-<h2 class="text-glow">List of Ticket Assignments</h2>
- 
+      </div>
+    </div>
+
+  
+    <div class="col-md-7 mb-4">
+      <div class="card galaxy-card p-4">
+        <h2 class="text-glow">List of Ticket Assignments</h2>
         <table class="table table-bordered table-striped galaxy-table mt-3">
-<thead class="table-dark text-glow">
-<tr>
-<th>Assignment ID</th>
-<th>Ticket ID</th>
-<th>Support Employee ID</th>
-<th>Assignment Date</th>
-</tr>
-</thead>
-<tbody>
+          <thead class="table-dark text-glow">
+            <tr>
+              <th>Assignment ID</th>
+              <th>Ticket ID</th>
+              <th>Support Employee ID</th>
+              <th>Assignment Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of assignments">
+              <td>{{ a.assignmentId }}</td>
+              <td>{{ a.ticketId }}</td>
+              <td>{{ a.Support_Emp_Id }}</td>
+              <td>{{ a.assignmentDate | date:'short' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-            @for (a of assignments; track a.assignmentId) {
-<tr>
-<td>{{ a.assignmentId }}</td>
-<td>{{ a.ticketId }}</td>
-<td>{{ a.Support_Emp_Id }}</td>
-<td>{{ a.assignmentDate | date:'short' }}</td>
-</tr>
-
-            }
-</tbody>
-</table>
-</div>
-</div>
- 
   </div>
 </div>
-
- 

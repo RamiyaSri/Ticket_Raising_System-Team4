@@ -1,7 +1,6 @@
 <div class="container mt-4">
 <div class="row">
  
-    <!-- FORM -->
 <div class="col-md-5 mb-4">
 <div class="card p-5 shadow-lg text-white border border-light rounded-4"
 
@@ -13,7 +12,6 @@
 
                 (click)="newTicket()">New</button>
  
-        <!-- Ticket ID -->
 <div class="mb-3">
 <label>Ticket ID</label>
 <div class="d-flex gap-2">
@@ -26,7 +24,6 @@
 </div>
 </div>
  
-        <!-- Employee Dropdown -->
 <div class="mb-3">
 <label>Employee</label>
 <div class="d-flex gap-2">
@@ -45,7 +42,6 @@
 </div>
 </div>
  
-        <!-- Subject -->
 <div class="mb-3">
 <label>Subject</label>
 <input class="form-control galaxy-input"
@@ -53,7 +49,6 @@
                  [(ngModel)]="ticket.subject">
 </div>
  
-        <!-- Description -->
 <div class="mb-3">
 <label>Description</label>
 <input class="form-control galaxy-input"
@@ -61,7 +56,6 @@
                  [(ngModel)]="ticket.description">
 </div>
  
-        <!-- Status -->
 <div class="mb-3">
 <label>Status</label>
 <div class="d-flex gap-2">
@@ -78,8 +72,6 @@
                     (click)="showTicketsByStatus()">Search</button>
 </div>
 </div>
- 
-        <!-- Ticket Type Dropdown -->
 <div class="mb-3">
 <label>Ticket Type</label>
 <div class="d-flex gap-2">
@@ -99,8 +91,6 @@
                     (click)="showTicketsByType()">Search</button>
 </div>
 </div>
- 
-        <!-- Resolution Date -->
 <div class="mb-3">
 <label>Resolution Date</label>
 <input type="datetime-local"
@@ -109,8 +99,7 @@
 
                  [(ngModel)]="ticket.resolutionDate">
 </div>
- 
-        <!-- Buttons -->
+
 <div class="mt-3 d-flex gap-2 flex-wrap">
 <button class="btn btn-success glow-btn"
 
@@ -126,8 +115,7 @@
         <p class="text-danger mt-2">{{ errMsg }}</p>
 </div>
 </div>
- 
-    <!-- TABLE -->
+
 <div class="col-md-7 mb-4">
 <div class="card galaxy-card p-4">
 <h2 class="text-glow">List of Tickets</h2>

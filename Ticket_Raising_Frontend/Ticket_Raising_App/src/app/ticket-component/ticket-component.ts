@@ -37,8 +37,7 @@ export class TicketComponent implements OnInit {
     this.loadTicketTypes();
     this.showAllTickets();
   }
- 
-  /* ---------- LOAD DROPDOWNS ---------- */
+
  
   loadEmployees() {
     this.employeeSvc.getAllEmployees().subscribe({
@@ -54,7 +53,6 @@ export class TicketComponent implements OnInit {
     });
   }
  
-  /* ---------- CRUD ---------- */
  
   newTicket() {
     this.ticket = new Ticket();
@@ -107,7 +105,6 @@ export class TicketComponent implements OnInit {
     });
   }
  
-  /* ---------- SEARCH ---------- */
  
   showTicketsByEmployee() {
     if (!this.ticket.empId) {
