@@ -26,6 +26,15 @@ export class TicketAssignmentComponent implements OnInit {
   employees: Employee[] = [];
   errMsg: string = '';
 
+  constructor(){
+    this.employeeSvc.getAllEmployees().subscribe({
+          next: data => this.employees = data.filter(e => e.role === "Supporter") ,
+          error: err => this.errMsg = err.error
+        });
+
+    console.log(this.employees);
+    
+  }
   ngOnInit() {
     this.loadTickets();
     this.loadEmployees();
@@ -40,11 +49,11 @@ export class TicketAssignmentComponent implements OnInit {
   }
 
   loadEmployees() {
-    this.employeeSvc.getAllEmployees().subscribe({
-      next: data => this.employees = data,
-      error: err => this.errMsg = err.error
-    });
+    
+    //this.employees = this.employees.filter(e => e.role === "Supporter");
+    
   }
+
 
   newAssignment() {
     this.assignment = new TicketAssignment("", "", "", new Date());

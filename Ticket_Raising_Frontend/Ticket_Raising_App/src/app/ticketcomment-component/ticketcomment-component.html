@@ -1,141 +1,125 @@
-<div class="container mt-3">
- 
-  <h2 class="text-center">Ticket Comments</h2>
- 
+<div class="container mt-4">
+  <div class="row">
 
-  @if (errMsg) {
-<div class="alert alert-danger">
+    <!-- COMMENT FORM (LEFT) -->
+    <div class="col-md-5 mb-4">
+      <div class="card p-5 shadow-lg text-white border border-light rounded-4"
+           style="background-color: rgba(0, 0, 0, 0.3);">
 
-      {{ errMsg }}
+        <h2 class="text-glow">Ticket Comment Form</h2>
+
+        <button class="btn btn-secondary mb-3 glow-btn w-100"
+                (click)="newComment()">New</button>
+
+        <!-- Comment ID -->
+        <div class="mb-3">
+          <label>Comment ID</label>
+          <input type="text"
+                 class="form-control galaxy-input"
+                 [(ngModel)]="ticketComment.commentId">
+        </div>
+
+        <!-- Ticket ID -->
+        <div class="mb-3">
+          <label>Ticket ID</label>
+          <div class="d-flex gap-2">
+            <input type="text"
+                   class="form-control galaxy-input"
+                   [(ngModel)]="ticketComment.ticketId">
+            <button class="btn btn-primary glow-btn"
+                    (click)="showCommentsByTicket()">Search</button>
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label>Employee ID</label>
+          <div class="d-flex gap-2">
+            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.support_Emp_Id" name="support_Emp_Id">
+              <option value="">-- Select Employee --</option>
+              <option *ngFor="let e of userEmp" [value]="e.empId">{{ e.empId }} </option>
+            </select>
+            <button class="btn btn-primary glow-btn" (click)="showCommentsByEmployee()">Search</button>
+          </div>
+        </div>
+
+        <!-- Support Employee -->
+        <div class="mb-3">
+          <label>Support Employee ID</label>
+          <div class="d-flex gap-2">
+            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.support_Emp_Id" name="support_Emp_Id">
+              <option value="">-- Select Employee --</option>
+              <option *ngFor="let e of SupportEmp" [value]="e.empId">{{ e.empId }} </option>
+            </select>
+            <button class="btn btn-primary glow-btn"
+                    (click)="showCommentsBySupportEmployee()">Search</button>
+          </div>
+        </div>
+
+        <!-- Comment -->
+        <div class="mb-3">
+          <label>Comment</label>
+          <textarea class="form-control galaxy-input"
+                    rows="3"
+                    [(ngModel)]="ticketComment.commentText"></textarea>
+        </div>
+
+        <!-- Comment Date -->
+        <div class="mb-3">
+          <label>Comment Date</label>
+          <input type="datetime-local"
+                 class="form-control galaxy-input"
+                 [(ngModel)]="ticketComment.commentDate">
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-3 d-flex gap-2 flex-wrap">
+          <button class="btn btn-success glow-btn"
+                  (click)="saveComment()">Add</button>
+          <button class="btn btn-warning glow-btn"
+                  (click)="updateComment()">Update</button>
+          <button class="btn btn-danger glow-btn"
+                  (click)="deleteComment()">Delete</button>
+        </div>
+
+        <p class="text-danger mt-2">{{ errMsg }}</p>
+      </div>
+    </div>
+
+    <!-- COMMENT LIST (RIGHT) -->
+    <div class="col-md-7 mb-4">
+      <div class="card galaxy-card p-4">
+        <h2 class="text-glow">List of Comments</h2>
+
+        <div class="table-responsive galaxy-table-wrapper">
+          <table class="table table-bordered table-striped galaxy-table mt-3">
+            <thead class="table-dark text-glow">
+              <tr>
+                <th>Comment ID</th>
+                <th>Ticket ID</th>
+                <th>Employee</th>
+                <th>Support</th>
+                <th>Comment</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (c of ticketComments; track c.commentId) {
+                <tr>
+                  <td>{{ c.commentId }}</td>
+                  <td>{{ c.ticketId }}</td>
+                  <td>{{ c.empId }}</td>
+                  <td>{{ c.support_Emp_Id }}</td>
+                  <td>{{ c.commentText }}</td>
+                  <td>{{ c.commentDate | date:'short' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </div>
-
-  }
- 
-<div class="card p-3 mb-3">
-<h5>Ticket Comment Details</h5>
- 
-    <div class="mb-2">
-<label>Comment Id</label>
-<input type="text" class="form-control"
-
-             [(ngModel)]="ticketComment.commentId">
-</div>
- 
-    <div class="mb-2">
-<label>Ticket Id</label>
-<input type="text" class="form-control"
-
-             [(ngModel)]="ticketComment.ticketId">
-</div>
- 
-    <div class="mb-2">
-<label>Employee Id</label>
-<input type="text" class="form-control"
-
-             [(ngModel)]="ticketComment.empId">
-</div>
- 
-    <div class="mb-2">
-<label>Support Employee Id</label>
-<input type="text" class="form-control"
-
-             [(ngModel)]="ticketComment.support_Emp_Id">
-</div>
- 
-    <div class="mb-2">
-<label>Comment Text</label>
-<textarea class="form-control"
-
-                [(ngModel)]="ticketComment.commentText"></textarea>
-</div>
- 
-    <div class="mb-3">
-<label>Comment Date</label>
-<input type="date" class="form-control"
-
-             [(ngModel)]="ticketComment.commentDate">
-</div>
- 
-    <button class="btn btn-success me-2" (click)="saveComment()">Save</button>
-<button class="btn btn-primary me-2" (click)="updateComment()">Update</button>
-<button class="btn btn-danger me-2" (click)="deleteComment()">Delete</button>
-<button class="btn btn-secondary" (click)="newComment()">New</button>
-</div>
- 
- 
-<div class="card p-3 mb-3">
-<h5>Search Comments</h5>
- 
-    <div class="row">
-<div class="col-md-4">
-<label>By Employee Id</label>
-<input type="text" class="form-control"
-
-               [(ngModel)]="empId">
-<button class="btn btn-info mt-2 w-100"
-
-                (click)="showCommentsByEmployee()">
-
-          Search
-</button>
-</div>
- 
-      <div class="col-md-4">
-<label>By Support Employee Id</label>
-<input type="text" class="form-control"
-
-               [(ngModel)]="supportEmpId">
-<button class="btn btn-info mt-2 w-100"
-
-                (click)="showCommentsBySupportEmployee()">
-
-          Search
-</button>
-</div>
- 
-      <div class="col-md-4">
-<label>By Ticket Id</label>
-<input type="text" class="form-control"
-
-               [(ngModel)]="ticketId">
-<button class="btn btn-info mt-2 w-100"
-
-                (click)="showCommentsByTicket()">
-
-          Search
-</button>
-</div>
-</div>
-</div>
- 
-  <!-- Comments Table -->
-<table class="table table-bordered table-striped">
-<thead>
-<tr>
-<th>Comment Id</th>
-<th>Ticket Id</th>
-<th>Employee Id</th>
-<th>Support Emp Id</th>
-<th>Comment</th>
-<th>Date</th>
-</tr>
-</thead>
-<tbody>
-
-      @for (c of ticketComments; track c.commentId) {
-<tr>
-<td>{{ c.commentId }}</td>
-<td>{{ c.ticketId }}</td>
-<td>{{ c.empId }}</td>
-<td>{{ c.support_Emp_Id }}</td>
-<td>{{ c.commentText }}</td>
-<td>{{ c.commentDate | date:'shortDate' }}</td>
-</tr>
-
-      }
-</tbody>
-</table>
- 
-</div>
-
- 

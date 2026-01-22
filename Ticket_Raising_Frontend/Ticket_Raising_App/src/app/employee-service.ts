@@ -44,8 +44,7 @@ export class EmployeeService {
 
     return this.http.get<Employee[]>(this.baseUrl, this.httpOptions);
 
-  }
- 
+  } 
 
   addEmployee(employee: Employee): Observable<Employee> {
 
