@@ -31,7 +31,9 @@ import { TicketType } from '../../Models/TicketType';
 })
 
 export class TicketComponent {
- 
+  username = sessionStorage.getItem('username');
+  role = sessionStorage.getItem('role');
+  
   ticketSvc = inject(TicketService);
 
   employeeSvc = inject(EmployeeService);

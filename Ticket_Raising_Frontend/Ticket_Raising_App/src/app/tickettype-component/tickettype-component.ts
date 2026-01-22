@@ -22,7 +22,7 @@ export class TicketTypeComponent {
   ticketType: TicketType;
   ticketTypes: TicketType[];
  
-  priorities: TicketPriority[];   
+  priorities: TicketPriority[];  
   priorityId: string;      
  
   errMsg: string;
@@ -107,19 +107,20 @@ export class TicketTypeComponent {
     });
   }
  
-  showTicketTypesByPriority() {
-    console.log("Selected Priority Id:", this.priorityId);
+ showTicketTypesByPriority() {
+  console.log("Selected Priority Id:", this.ticketType.priorityId);
  
-    this.ticketTypeSvc.getTicketTypesByPriority(this.priorityId).subscribe({
-      next: (response: any) => {
-        console.log("Filtered Ticket Types:", response);
-        this.ticketTypes = response;
-        this.errMsg = "";
-      },
-      error: (err) => {
-        console.log("API Error:", err);
-        this.errMsg = err.error || err.message;
-      }
-    });
-  }
+  this.ticketTypeSvc.getTicketTypesByPriority(this.ticketType.priorityId).subscribe({
+    next: (response: any) => {
+      console.log("Filtered Ticket Types:", response);
+      this.ticketTypes = response;
+      this.errMsg = "";
+    },
+    error: (err) => {
+      console.log("API Error:", err);
+      this.errMsg = err.error || err.message;
+    }
+  });
 }
+ 
+  }

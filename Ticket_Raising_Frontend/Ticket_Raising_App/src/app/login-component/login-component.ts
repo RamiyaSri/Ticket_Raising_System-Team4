@@ -13,7 +13,7 @@ import { AuthService } from '../auth-service';
   styleUrl: './login-component.css',
 })
 export class LoginComponent {
- 
+  AuthSvc: AuthService = inject(AuthService);
   EmployeeSvc: EmployeeService = inject(EmployeeService);
   router: Router = inject(Router);
  
@@ -25,10 +25,11 @@ export class LoginComponent {
     this.EmployeeSvc.login(this.empId, this.password).subscribe({
       next: (employee: Employee) => {
         alert("Login successful");
-        sessionStorage.setItem("username", employee.firstName);
-        sessionStorage.setItem("empId", employee.empId);
-        sessionStorage.setItem("role", employee.role);
- 
+        // sessionStorage.setItem("username", employee.firstName);
+        // sessionStorage.setItem("empId", employee.empId);
+        // sessionStorage.setItem("role", employee.role);
+        this.AuthSvc.setLogin(employee.firstName, employee.role, employee.empId);
+
         this.errMsg = "";
         this.router.navigate(['/']);   
       },

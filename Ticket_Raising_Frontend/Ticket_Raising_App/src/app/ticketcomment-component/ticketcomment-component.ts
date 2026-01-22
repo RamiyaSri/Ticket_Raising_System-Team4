@@ -3,6 +3,8 @@ import { TicketCommentService } from '../ticketcomment-service';
 import { TicketComment } from '../../Models/TicketComment';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Employee } from '../../Models/Employee';
+import { EmployeeService } from '../employee-service';
  
 @Component({
   selector: 'app-ticket-comment-component',
@@ -13,11 +15,13 @@ import { FormsModule } from '@angular/forms';
 export class TicketCommentComponent {
  
   ticketCommentSvc: TicketCommentService = inject(TicketCommentService);
+  employeeSvc: EmployeeService = inject(EmployeeService);
  
   ticketComments: TicketComment[];
   ticketComment: TicketComment;
   errMsg: string;
- 
+  userEmp: Employee[] | undefined;
+  SupportEmp: Employee[] | undefined;
   empId: string;
   supportEmpId: string;
   ticketId: string;
@@ -26,10 +30,21 @@ export class TicketCommentComponent {
     this.ticketComments = [];
     this.ticketComment = new TicketComment("", "", "", "", "", new Date());
     this.errMsg = "";
- 
     this.empId = "";
     this.supportEmpId = "";
     this.ticketId = "";
+    
+    this.employeeSvc.getAllEmployees().subscribe({
+          next: data => this.userEmp = data.filter(e => e.role === "User") ,
+          error: err => this.errMsg = err.error
+        });
+
+    this.employeeSvc.getAllEmployees().subscribe({
+          next: data => this.SupportEmp = data.filter(e => e.role === "Supporter") ,
+          error: err => this.errMsg = err.error
+        });
+
+        
  
     this.showAllComments();
   }
