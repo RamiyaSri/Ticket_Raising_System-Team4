@@ -1,68 +1,138 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-<div class="container-fluid">
-<a class="navbar-brand" routerLink="/">Ticket System</a>
- 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
- 
-    <div class="collapse navbar-collapse" id="navbarNav">
- 
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<li class="nav-item">
-<a class="nav-link" routerLink="/ticket" routerLinkActive="active-link">
-            Tickets
-</a>
-</li>
- 
+@if (username && role == "Admin") {
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">Ticket System</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+        
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-<a class="nav-link" routerLink="/tickettype" routerLinkActive="active-link">
-            Ticket Types
-</a>
-</li>
- 
-        <li class="nav-item">
-<a class="nav-link" routerLink="/ticketpriority" routerLinkActive="active-link">
-            Ticket Priorities
-</a>
-</li>
-  
-          <li class="nav-item">
-<a class="nav-link" routerLink="/employee" routerLinkActive="active-link">
-            Employees          
-</a>
-         <li class="nav-item">
-<a class="nav-link" routerLink="/ticketassignment" routerLinkActive="active-link">
-            Ticket Assignments          
-</a>
-        <li class="nav-item">
-<a class="nav-link" routerLink="/ticketcomment" routerLinkActive="active-link">
-            Ticket Comments
-</a>
-        <li class="nav-item">
-<a class="nav-link" routerLink="/logout" routerLinkActive="active-link">
-            Logout
-</a>
-        <li class="nav-item">
-<a class="nav-link" routerLink="/login" routerLinkActive="active-link">
-            Login
-</a>
-        <li class="nav-item">
-<a class="nav-link" routerLink="/register" routerLinkActive="active-link">
-            Register
-</a>
-        <li class="nav-item">
-<a class="nav-link" routerLink="/" routerLinkActive="active-link">
-            Home
-</a>
+        <a class="nav-link" routerLink="/ticket" routerLinkActive="active-link">
+                Tickets
+        </a>
+        </li>
+        
+                <li class="nav-item">
+        <a class="nav-link" routerLink="/tickettype" routerLinkActive="active-link">
+                Ticket Types
+        </a>
+        </li>
+        
+                <li class="nav-item">
+        <a class="nav-link" routerLink="/ticketpriority" routerLinkActive="active-link">
+                Ticket Priorities
+        </a>
+        </li>
+        
+                <li class="nav-item">
+        <a class="nav-link" routerLink="/employee" routerLinkActive="active-link">
+                Employees          
+        </a>
+                <li class="nav-item">
+        <a class="nav-link" routerLink="/ticketassignment" routerLinkActive="active-link">
+                Ticket Assignments          
+        </a>
+                <li class="nav-item">
+        <a class="nav-link" routerLink="/ticketcomment" routerLinkActive="active-link">
+                Ticket Comments
+        </a>
+                <li class="nav-item">
+        <a class="nav-link" routerLink="/logout" routerLinkActive="active-link">
+                Logout
+        </a>
+                <li class="nav-item">
+        <a class="nav-link" routerLink="/" routerLinkActive="active-link">
+                Home
+        </a>
 
-</li>
-</ul>
- 
-    </div>
-</div>
-</nav>
+        </li>
+        </ul>
+        
+        </div>
+        </div>
+        </nav>
+}
+@else if (username && role == "User") {
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">Ticket System</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+        
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="/" routerLinkActive="active-link">
+                                Home
+                        </a>
+                </li>
+                <li class="nav-item">
+                                
+                        <a class="nav-link" routerLink="/employee" routerLinkActive="active-link">
+                                Employees          
+                        </a>
+                </li>
+                <li>
+                        <a class="nav-link" routerLink="/ticket" routerLinkActive="active-link">
+                                Tickets
+                        </a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="/ticketcomment" routerLinkActive="active-link">
+                                Ticket Comments
+                        </a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="/logout" routerLinkActive="active-link">
+                                Logout
+                        </a>
+                </li>
+        </ul>
+        </div>
+        </div>
+        </nav>
+}
+
+@if (!username) {
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">Ticket System</a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+        
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="/login" routerLinkActive="active-link">
+                                Login
+                        </a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="/register" routerLinkActive="active-link">
+                                Register
+                        </a>
+                </li>
+        </ul>
+        </div>
+        </div>
+        </nav>
+}
+
  
 <router-outlet></router-outlet>

@@ -18,11 +18,22 @@ public class EFTicketCommentRepository : ITicketCommentRepository
         {
             SqlException? sqlException = ex.InnerException as SqlException;
             int errorNumber = sqlException.Number;
-
+            if (ex.InnerException.Message.Contains("The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_TicketComment_Ticket_TicketId\""))
+                errorNumber = 700;
+            else if (ex.InnerException.Message.Contains("The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_TicketComment_Employee_EmpId\""))
+                errorNumber = 701;
+            else if (ex.InnerException.Message.Contains("The INSERT statement conflicted with the FOREIGN KEY constraint \"FK_TicketComment_Employee_Support_Emp_Id\""))
+                errorNumber = 702;
             switch (errorNumber)
             {
                 case 2627:
                     throw new TicketException("Details already exists", 501);
+                case 700:
+                    throw new TicketException("Given ticket Id Not Found",502);
+                case 701:
+                    throw new TicketException("Given Employee Id Not Found",502);
+                case 702:
+                    throw new TicketException("Given Supplier Empoyee Id Not Found",502);
                 default:
                     throw new TicketException(sqlException.Message, 599);
             }

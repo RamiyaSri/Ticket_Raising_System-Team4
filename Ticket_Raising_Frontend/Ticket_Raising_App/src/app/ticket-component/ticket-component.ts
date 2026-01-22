@@ -38,8 +38,6 @@ export class TicketComponent {
 
   ticketTypeSvc = inject(TicketTypeService);
  
-
-
   ticket: Ticket = new Ticket();
 
   tickets: Ticket[] = [];
