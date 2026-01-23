@@ -22,6 +22,7 @@ export class RegisterComponent {
   constructor() {
     this.employee = new Employee();
     this.errMsg = "";
+    this.employee.role = "User";
   }
  
   register() {

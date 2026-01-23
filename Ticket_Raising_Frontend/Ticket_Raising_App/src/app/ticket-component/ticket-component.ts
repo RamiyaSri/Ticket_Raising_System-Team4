@@ -33,6 +33,7 @@ import { TicketType } from '../../Models/TicketType';
 export class TicketComponent {
   username = sessionStorage.getItem('username');
   role = sessionStorage.getItem('role');
+  EmpId = sessionStorage.getItem('empId');
   
   ticketSvc = inject(TicketService);
 
@@ -52,7 +53,7 @@ export class TicketComponent {
  
   constructor() {
 
-
+    this.ticket.status = 'Open';
     this.loadEmployees();
 
     this.loadTicketTypes();
@@ -65,8 +66,10 @@ export class TicketComponent {
 
     this.employeeSvc.getAllEmployees().subscribe({
 
-      next: data => this.employees = data,
-
+      next: data => {
+        this.employees = data;
+        this.ticket.empId = this.EmpId;
+      },
       error: err => this.errMsg = err.error
 
     });
@@ -97,7 +100,15 @@ export class TicketComponent {
 
     this.ticketSvc.getAllTickets().subscribe({
 
-      next: data => this.tickets = data,
+      next: data => {
+        this.tickets = data;
+        if(this.role == "User"){
+          this.tickets = this.tickets.filter((tkt: Ticket) => tkt.empId === this.EmpId);
+        }
+        else{
+          this.tickets = data;
+        }
+      },
 
       error: err => this.errMsg = err.error
 

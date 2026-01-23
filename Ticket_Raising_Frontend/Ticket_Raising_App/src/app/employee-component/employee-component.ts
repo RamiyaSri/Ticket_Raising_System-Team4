@@ -14,16 +14,36 @@ export class EmployeeComponent {
  
   EmployeeSvc: EmployeeService = inject(EmployeeService);
   userName = sessionStorage.getItem("username");
+  EmpID = sessionStorage.getItem("empId");
   role =sessionStorage.getItem("role");
   employee: Employee;
   employees: Employee[];
   errMsg: string;
+  ToEdit: boolean = false;
  
   constructor() {
     this.employees = [];
     this.errMsg = "";
     this.employee = new Employee();
     this.showAllEmployees();
+  }
+
+  UpdateUserDetails(){
+    this.ToEdit = true;
+    if (this.EmpID){
+      this.EmployeeSvc.getEmployee(this.EmpID).subscribe({
+        next: (response: any) => {
+          this.employee = response;
+          this.errMsg = "";
+        },
+        error: (err) => this.errMsg = err.error
+      });
+  }
+  }
+
+  cancelUpdateUserDetails(){
+    this.ToEdit = false;
+    this.newEmployee();
   }
  
 
@@ -36,7 +56,12 @@ export class EmployeeComponent {
   showAllEmployees() {
     this.EmployeeSvc.getAllEmployees().subscribe({
       next: (response: any) => {
+        if(this.role == "User"){
+          this.employees = response.filter((emp: Employee) => emp.empId === this.EmpID);
+        }
+        else{
         this.employees = response;
+        }
         this.errMsg = "";
       },
       error: (err) => this.errMsg = err.error
@@ -59,6 +84,7 @@ export class EmployeeComponent {
         alert("Employee details updated");
         this.errMsg = "";
         this.showAllEmployees();
+        this.ToEdit = false;
       },
       error: (err) => this.errMsg = err.error
     });

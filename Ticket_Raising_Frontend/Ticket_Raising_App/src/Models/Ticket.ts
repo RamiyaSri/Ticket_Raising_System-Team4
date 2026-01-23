@@ -1,6 +1,6 @@
 export class Ticket {
     public ticketId: string;
-    public empId: string;
+    public empId: string | null;
     public subject: string;
     public description: string;
     public status: string;

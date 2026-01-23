@@ -16,13 +16,15 @@ import { Employee } from '../../Models/Employee';
   styleUrls: ['./ticketassignment-component.css']
 })
 export class TicketAssignmentComponent implements OnInit {
-  assignmentSvc = inject(TicketAssignmentService);
+  assignmentSvc = inject(TicketAssignmentService)
   ticketSvc = inject(TicketService);
   employeeSvc = inject(EmployeeService);
 
   assignment: TicketAssignment = new TicketAssignment("", "", "", new Date());
   assignments: TicketAssignment[] = [];
   tickets: Ticket[] = [];
+  curAssigmentId: string = "";
+  ticket: Ticket = new Ticket();
   employees: Employee[] = [];
   errMsg: string = '';
 
@@ -74,12 +76,35 @@ export class TicketAssignmentComponent implements OnInit {
     }
     this.assignmentSvc.addAssignment(this.assignment).subscribe({
       next: () => {
+        this.curAssigmentId = this.assignment.assignmentId;
         this.showAllAssignments();
         this.newAssignment();
+
+        this.ticketSvc.getTicket(this.assignment.ticketId).subscribe({
+            next: (data) => {
+            {
+              this.ticket = data
+              this.ticket.status = "In Progress";
+              console.log("Before Updating: ",this.ticket);
+              this.ticketSvc.updateTicket(this.ticket.ticketId, this.ticket).subscribe({
+                  next: () => {
+                    
+                  },
+                  error: err => this.errMsg = err.error
+                });
+                console.log("After Updating: ",this.ticket);
+            }
+
+            },
+            error: err => this.errMsg = err.error
+            
+
+          });
       },
       error: err => this.errMsg = err.error
     });
   }
+    
 
   showAssignment() {
     if (!this.assignment.assignmentId) {

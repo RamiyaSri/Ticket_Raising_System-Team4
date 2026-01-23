@@ -23,9 +23,10 @@
         <div class="mb-3">
           <label>Ticket ID</label>
           <div class="d-flex gap-2">
-            <input type="text"
-                   class="form-control galaxy-input"
-                   [(ngModel)]="ticketComment.ticketId">
+            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.ticketId" name="ticketId">
+              <option value="">-- Select Ticket Id --</option>
+              <option *ngFor="let e of tickets" [value]="e.ticketId">{{ e.ticketId }} </option>
+            </select>
             <button class="btn btn-primary glow-btn"
                     (click)="showCommentsByTicket()">Search</button>
           </div>
@@ -35,7 +36,7 @@
         <div class="mb-3">
           <label>Employee ID</label>
           <div class="d-flex gap-2">
-            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.support_Emp_Id" name="support_Emp_Id">
+            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.empId" name="empId">
               <option value="">-- Select Employee --</option>
               <option *ngFor="let e of userEmp" [value]="e.empId">{{ e.empId }} </option>
             </select>
@@ -62,14 +63,6 @@
           <textarea class="form-control galaxy-input"
                     rows="3"
                     [(ngModel)]="ticketComment.commentText"></textarea>
-        </div>
-
-        <!-- Comment Date -->
-        <div class="mb-3">
-          <label>Comment Date</label>
-          <input type="datetime-local"
-                 class="form-control galaxy-input"
-                 [(ngModel)]="ticketComment.commentDate">
         </div>
 
         <!-- Action Buttons -->

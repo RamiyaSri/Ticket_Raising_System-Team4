@@ -100,24 +100,59 @@ namespace TicketClassLibrary.Repos
             return tickets;
         }
         public async Task<List<Ticket>> GetTicketsByEmployeeAsync(string empId)
-        {
-            return await context.Tickets
-                .Where(t => t.EmpId == empId)
-                .ToListAsync();
+            {
+            List<Ticket> tickets =
+                await (from t in context.Tickets
+                    where t.EmpId == empId
+                    select t).ToListAsync();
+        
+            if (tickets.Count() == 0)
+            {
+                throw new TicketException("No Tickets found for given Employee", 501);
+            }
+        
+            return tickets;
         }
 
-        public async Task<List<Ticket>> GetTicketsByStatusAsync(string status)
-        {
-            return await context.Tickets
-                .Where(t => t.Status == status)
-                .ToListAsync();
-        }
+       public async Task<List<Ticket>> GetTicketsByStatusAsync(string status)
+
+{
+
+    List<Ticket> tickets =
+
+        await (from t in context.Tickets
+
+               where t.Status == status
+
+               select t).ToListAsync();
+ 
+    if (tickets.Count() == 0)
+
+    {
+
+        throw new TicketException("No Tickets found for given Status", 501);
+
+    }
+ 
+    return tickets;
+
+}
+ 
 
         public async Task<List<Ticket>> GetTicketsByTypeAsync(string ticketTypeId)
-        {
-            return await context.Tickets
-                .Where(t => t.TicketTypeId == ticketTypeId)
-                .ToListAsync();
-        }
+{
+    List<Ticket> tickets =
+        await (from t in context.Tickets
+               where t.TicketTypeId == ticketTypeId
+               select t).ToListAsync();
+ 
+    if (tickets.Count() == 0)
+    {
+        throw new TicketException("No Tickets found for given Ticket Type", 501);
+    }
+ 
+    return tickets;
+}
+ 
     }
 }

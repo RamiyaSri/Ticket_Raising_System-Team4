@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Employee } from '../../Models/Employee';
 import { EmployeeService } from '../employee-service';
+import { Ticket } from '../../Models/Ticket';
+import { TicketService } from '../ticket-service';
  
 @Component({
   selector: 'app-ticket-comment-component',
@@ -14,10 +16,11 @@ import { EmployeeService } from '../employee-service';
 })
 export class TicketCommentComponent {
  
-  ticketCommentSvc: TicketCommentService = inject(TicketCommentService);
+  ticketCommentSvc: TicketCommentService=inject(TicketCommentService);
   employeeSvc: EmployeeService = inject(EmployeeService);
- 
+  ticketSVCC: TicketService = inject(TicketService);
   ticketComments: TicketComment[];
+  tickets: Ticket[] = [];
   ticketComment: TicketComment;
   errMsg: string;
   userEmp: Employee[] | undefined;
@@ -33,9 +36,20 @@ export class TicketCommentComponent {
     this.empId = "";
     this.supportEmpId = "";
     this.ticketId = "";
+    //this.ticketComment.ticketId = ;
     
+    
+
+    this.ticketSVCC.getAllTickets().subscribe({
+      next: (data) => {
+        this.tickets = data.filter((t:any) => t.empId === sessionStorage.getItem("empId")) },
+      error: err => this.errMsg = err.error
+    });
+
     this.employeeSvc.getAllEmployees().subscribe({
-          next: data => this.userEmp = data.filter(e => e.role === "User") ,
+          next: data => {this.userEmp = data.filter(e => e.role === "User")
+            this.ticketComment.empId = sessionStorage.getItem("empId") || "";
+          } ,
           error: err => this.errMsg = err.error
         });
 
