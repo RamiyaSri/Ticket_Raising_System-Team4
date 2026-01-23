@@ -12,8 +12,8 @@ using TicketClassLibrary.Models;
 namespace TicketClassLibrary.Migrations
 {
     [DbContext(typeof(TicketDbContext))]
-    [Migration("20260120111253_Initial")]
-    partial class Initial
+    [Migration("20260123064956_Initials")]
+    partial class Initials
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,7 +129,8 @@ namespace TicketClassLibrary.Migrations
                     b.Property<string>("Support_Emp_Id")
                         .IsRequired()
                         .HasMaxLength(5)
-                        .HasColumnType("char(5)");
+                        .HasColumnType("char(5)")
+                        .HasJsonPropertyName("Support_Emp_Id");
 
                     b.Property<string>("TicketId")
                         .IsRequired()

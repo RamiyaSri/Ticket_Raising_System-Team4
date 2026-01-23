@@ -25,7 +25,7 @@ public class TicketDbContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseSqlServer(
-                "data source=localhost\\SQLEXPRESS; database=Team4TicketDB; integrated security=true; Trust Server Certificate=true"
+                "Server=tcp:team4db.database.windows.net,1433;Initial Catalog=ticket4portalDB;Persist Security Info=False;User ID=ticketingportal;Password=Godsaveus*;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
             );
         }
     }
