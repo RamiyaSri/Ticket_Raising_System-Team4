@@ -26,14 +26,14 @@ export class TicketCommentService {
  
   getComment(commentId: string): Observable<TicketComment> {
     return this.http.get<TicketComment>(
-      this.baseUrl + "/api/TicketComments/" + encodeURIComponent(commentId),
+      this.baseUrl + "api/TicketComments/" + encodeURIComponent(commentId),
       { headers: this.getAuthHeaders() }
     );
   }
  
   addComment(comment: TicketComment): Observable<TicketComment> {
     return this.http.post<TicketComment>(
-      this.baseUrl + "/api/TicketComments/",
+      this.baseUrl + "api/TicketComments/",
       comment,
       { headers: this.getAuthHeaders() }
     );
@@ -41,7 +41,7 @@ export class TicketCommentService {
  
   updateComment(commentId: string, comment: TicketComment): Observable<TicketComment> {
     return this.http.put<TicketComment>(
-      this.baseUrl + "/api/TicketComments/" + encodeURIComponent(commentId),
+      this.baseUrl + "api/TicketComments/" + encodeURIComponent(commentId),
       comment,
       { headers: this.getAuthHeaders() }
     );
@@ -49,7 +49,7 @@ export class TicketCommentService {
  
   deleteComment(commentId: string): Observable<any> {
     return this.http.delete<any>(
-      this.baseUrl + "/api/TicketComments/" + encodeURIComponent(commentId),
+      this.baseUrl + "  api/TicketComments/" + encodeURIComponent(commentId),
       { headers: this.getAuthHeaders() }
     );
   }
