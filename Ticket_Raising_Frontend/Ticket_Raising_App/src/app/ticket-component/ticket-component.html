@@ -1,116 +1,105 @@
 <div class="container mt-4">
   <div class="row">
-
-      <div class="col-md-5 mb-4">
-        <div class="card p-5 shadow-lg text-white border border-light rounded-4"
-             style="background-color: rgba(0, 0, 0, 0.3);">
-
-          <h2 class="text-glow">Ticket Form</h2>
-
-          <button class="btn btn-secondary mb-3 glow-btn w-100"
-                  (click)="newTicket()">New</button>
-
-          <div class="mb-3">
-            <label>Ticket ID</label>
-            <div class="d-flex gap-2">
-              <input type="text"
-                     class="form-control galaxy-input"
-                     [(ngModel)]="ticket.ticketId" />
-              <button class="btn btn-primary glow-btn"
-                      (click)="showTicket()">Show</button>
-            </div>
+ 
+    <div class="col-md-5 mb-4">
+      <div class="card p-5 shadow-lg text-white border border-light rounded-4"
+           style="background-color: rgba(0, 0, 0, 0.3);">
+ 
+        <h2 class="text-glow">Ticket Form</h2>
+ 
+        <button type="button" class="btn btn-secondary mb-3 glow-btn w-100" (click)="newTicket()">New</button>
+ 
+ 
+        <div class="mb-3">
+          <label>Ticket ID</label>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-control galaxy-input" [(ngModel)]="ticket.ticketId" />
+            <button class="btn btn-primary glow-btn" (click)="showTicket()">Show</button>
           </div>
-
-         
-          <div class="mb-3">
-            <label>Employee</label>
-            <div class="d-flex gap-2">
-              <select class="form-select galaxy-input"
-                      [(ngModel)]="ticket.empId">
-                <option value="">-- Select Employee --</option>
-                <option *ngFor="let e of employees"
-                        [value]="e.empId">
-                  {{ e.empId }}
-                </option>
-              </select>
-              <button class="btn btn-primary glow-btn"
-                      (click)="showTicketsByEmployee()">Search</button>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label>Status</label>
-            <div class="d-flex gap-2">
-              <select class="form-select galaxy-input"
-                      [(ngModel)]="ticket.status">
-                <option value="Open">Open</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Resolved">Resolved</option>
-                <option value="Closed">Closed</option>
-              </select>
-              <button class="btn btn-primary glow-btn"
-                      (click)="showTicketsByStatus()">Search</button>
-            </div>
-          </div>
-
-        
-          <div class="mb-3">
-            <label>Subject</label>
-            <input type="text"
-                   class="form-control galaxy-input"
-                   [(ngModel)]="ticket.subject" />
-          </div>
-
-          
-          <div class="mb-3">
-            <label>Description</label>
-            <input type="text"
-                   class="form-control galaxy-input"
-                   [(ngModel)]="ticket.description" />
-          </div>
-
-        
-          <div class="mb-3">
-            <label>Ticket Type</label>
-            <div class="d-flex gap-2">
-              <select class="form-select galaxy-input"
-                      [(ngModel)]="ticket.ticketTypeId">
-                <option value="">-- Select Ticket Type --</option>
-                <option *ngFor="let tt of ticketTypes"
-                        [value]="tt.ticketTypeId">
-                  {{ tt.typeName }}
-                </option>
-              </select>
-              <button class="btn btn-primary glow-btn"
-                      (click)="showTicketsByType()">Search</button>
-            </div>
-          </div>
-
-          <!-- <div class="mb-3">
-            <label>Resolution Date</label>
-            <input type="datetime-local"
-                   class="form-control galaxy-input"
-                   [(ngModel)]="ticket.resolutionDate" />
-          </div> -->
-
-          <div class="mt-3 d-flex gap-2 flex-wrap">
-            <button class="btn btn-success glow-btn"
-                    (click)="addTicket()">Add</button>
-            <button class="btn btn-warning glow-btn"
-                    (click)="updateTicket()">Update</button>
-            <button class="btn btn-danger glow-btn"
-                    (click)="deleteTicket()">Delete</button>
-          </div>
-
-          <p class="text-danger mt-2">{{ errMsg }}</p>
         </div>
+ 
+     
+        <div class="mb-3">
+          <label>Employee</label>
+          <div class="d-flex gap-2">
+            <select class="form-select galaxy-input" [(ngModel)]="ticket.empId">
+              <option value="">-- Select Employee --</option>
+              <option *ngFor="let e of employees" [value]="e.empId">{{ e.empId }}</option>
+            </select>
+            <button class="btn btn-primary glow-btn" (click)="showTicketsByEmployee()">Search</button>
+          </div>
+        </div>
+ 
+       
+        <div class="mb-3">
+          <label>Status</label>
+          <div class="d-flex gap-2">
+            <select class="form-select galaxy-input" [(ngModel)]="ticket.status">
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+              <option value="Closed">Closed</option>
+            </select>
+            <button class="btn btn-primary glow-btn" (click)="showTicketsByStatus()">Search</button>
+          </div>
+        </div>
+ 
+     
+        <div class="mb-3">
+          <label>Subject</label>
+          <input type="text" class="form-control galaxy-input" [(ngModel)]="ticket.subject" />
+        </div>
+ 
+     
+        <div class="mb-3">
+          <label>Description</label>
+          <input type="text" class="form-control galaxy-input" [(ngModel)]="ticket.description" />
+        </div>
+ 
+     
+        <div class="mb-3">
+          <label>Ticket Type</label>
+          <div class="d-flex gap-2">
+            <select class="form-select galaxy-input" [(ngModel)]="ticket.ticketTypeId">
+              <option value="">-- Select Ticket Type --</option>
+              <option *ngFor="let tt of ticketTypes" [value]="tt.ticketTypeId">{{ tt.typeName }}</option>
+            </select>
+            <button class="btn btn-primary glow-btn" (click)="showTicketsByType()">Search</button>
+          </div>
+        </div>
+ 
+     
+        <div class="mb-3">
+          <label>Creation Date</label>
+          <input type="datetime-local" class="form-control galaxy-input"
+                 [(ngModel)]="ticket.creationDate"
+                 [ngModelOptions]="{standalone: true}" />
+        </div>
+ 
+     
+        <div class="mb-3">
+          <label>Resolution Date</label>
+          <input type="datetime-local" class="form-control galaxy-input"
+                 [(ngModel)]="ticket.resolutionDate"
+                 [ngModelOptions]="{standalone: true}" />
+        </div>
+ 
+   
+        <div class="mt-3 d-flex gap-2 flex-wrap">
+          <button class="btn btn-success glow-btn" (click)="addTicket()">Add</button>
+          <button class="btn btn-warning glow-btn" (click)="updateTicket()">Update</button>
+          <button class="btn btn-danger glow-btn" (click)="deleteTicket()">Delete</button>
+        </div>
+ 
+        <p class="text-danger mt-2">{{ errMsg }}</p>
       </div>
-
-  
+    </div>
+ 
+   
     <div class="col-md-7 mb-4">
       <div class="card galaxy-card p-4">
         <h2 class="text-glow">List of Tickets</h2>
-
+ 
         <div class="table-responsive galaxy-table-wrapper">
           <table class="table table-bordered table-striped galaxy-table mt-3">
             <thead class="table-dark text-glow">
@@ -120,28 +109,28 @@
                 <th>Subject</th>
                 <th>Status</th>
                 <th>Type</th>
-                <th>Created</th>
-                <th>Resolved</th>
+                <th>Creation Date</th>
+                <th>Resolution Date</th>
+                <th>Support User ID</th>
               </tr>
             </thead>
+ 
             <tbody>
-              @for (t of tickets; track t.ticketId) {
-                <tr>
-                  <td>{{ t.ticketId }}</td>
-                  <td>{{ t.empId }}</td>
-                  <td>{{ t.subject }}</td>
-                  <td>{{ t.status }}</td>
-                  <td>{{ t.ticketTypeId }}</td>
-                  <td>{{ t.creationDate | date:'short' }}</td>
-                  <td>{{ t.resolutionDate | date:'short' }}</td>
-                </tr>
-              }
+              <tr *ngFor="let t of tickets">
+                <td>{{ t.ticketId }}</td>
+                <td>{{ t.empId }}</td>
+                <td>{{ t.subject }}</td>
+                <td>{{ t.status }}</td>
+                <td>{{ t.ticketTypeId }}</td>
+                <td>{{ t.creationDate | date:'short' }}</td>
+                <td>{{ t.resolutionDate | date:'short' }}</td>
+                <td>{{ supportUserMap[t.ticketId] || 'Unassigned' }}</td>
+              </tr>
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
-
+ 
   </div>
 </div>
