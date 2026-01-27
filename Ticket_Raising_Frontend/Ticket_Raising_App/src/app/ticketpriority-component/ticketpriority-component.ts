@@ -8,71 +8,79 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-ticket-priority-component',
   imports: [CommonModule, FormsModule],
   templateUrl: './ticketpriority-component.html',
-  styleUrl: './ticketpriority-component.css',
+  styleUrls: ['./ticketpriority-component.css'],
 })
 export class TicketPriorityComponent {
  
-  prioritySvc: TicketPriorityService = inject(TicketPriorityService);
+  prioritySvc = inject(TicketPriorityService);
  
-  priorities: TicketPriority[];
-  priority: TicketPriority;
-  errMsg: string;
-  priorityLevel: string;  
+  priorities: TicketPriority[] = [];
+  priority: TicketPriority = new TicketPriority(undefined, "", "", 0, 0);
+ 
+  errMsg: string = "";
+ 
+  priorityLevel: string = "";
+  priorityLevelSearch: string = "";
+ 
   constructor() {
-    this.priorities = [];
-    this.priority = new TicketPriority("", "", "", 0, 0);
-    this.errMsg = "";
-    this.priorityLevel = "";
+    this.resetPriority();
     this.showAllPriorities();
+  }
+ 
+  resetPriority() {
+    this.priority = new TicketPriority(undefined, "", "", 0, 0);
+    this.priorityLevel = "";
   }
  
   showAllPriorities() {
     this.prioritySvc.getAllPriorities().subscribe({
-      next: (response: any) => {
-        this.priorities = response;
-        console.log(response);
+      next: (res: TicketPriority[]) => {
+        this.priorities = res;
         this.errMsg = "";
       },
-      error: (err) => {
-        this.errMsg = err.message;
-        console.log(err);
-      }
+      error: (err) => this.errMsg = err?.error?.message || err.message
     });
   }
  
   savePriority() {
+    this.priority.priorityLevel = this.priorityLevel;
+ 
     this.prioritySvc.addPriority(this.priority).subscribe({
       next: () => {
         alert("New Priority added");
-        this.errMsg = "";
+        this.resetPriority();
         this.showAllPriorities();
       },
-      error: (err) => this.errMsg = err.error
+      error: (err) => this.errMsg = err?.error?.message || err.message
     });
   }
  
   newPriority() {
-    this.priority = new TicketPriority("", "", "", 0, 0);
+    this.resetPriority();
+    this.errMsg = "";
   }
  
   showPriority() {
     this.prioritySvc.getPriority(this.priority.priorityId).subscribe({
-      next: (response: any) => {
-        this.priority = response;
+      next: (res: TicketPriority) => {
+        this.priority = res;
+        this.priorityLevel = res.priorityLevel;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.error
+      error: (err) => this.errMsg = err?.error?.message || err.message
     });
   }
  
   updatePriority() {
+    this.priority.priorityLevel = this.priorityLevel;
+ 
     this.prioritySvc.updatePriority(this.priority.priorityId, this.priority).subscribe({
       next: () => {
         alert("Priority updated successfully");
-        this.errMsg = "";
+        this.resetPriority();
         this.showAllPriorities();
       },
-      error: (err) => this.errMsg = err.error
+      error: (err) => this.errMsg = err?.error?.message || err.message
     });
   }
  
@@ -80,30 +88,30 @@ export class TicketPriorityComponent {
     this.prioritySvc.deletePriority(this.priority.priorityId).subscribe({
       next: () => {
         alert("Priority deleted successfully");
-        this.errMsg = "";
+        this.resetPriority();
         this.showAllPriorities();
       },
-      error: (err) => this.errMsg = err.error
+      error: (err) => this.errMsg = err?.error?.message || err.message
     });
   }
  
-showPriorityByLevel() {
-  console.log("Priority Level entered:", this.priorityLevel);
-
-  this.prioritySvc.getPriorityByLevel(this.priorityLevel).subscribe({
-    next: (response: TicketPriority[]) => {
-      console.log("Response from API:", response);
-      this.priorities = response;
-      this.errMsg = "";
-    },
-    error: (err) => {
-      console.log("API Error:", err);
-      this.errMsg = err.error;
-      this.priorities = [];
-    }
-  });
+  showPriorityByLevel() {
+    this.prioritySvc.getPriorityByLevel(this.priorityLevelSearch).subscribe({
+      next: (res: TicketPriority[]) => {
+        this.priorities = res;
+        this.errMsg = "";
+      },
+      error: (err) => {
+        this.errMsg = err?.error?.message || err.message;
+        this.priorities = [];
+      }
+    });
+  }
+ 
+  goBack() {
+    this.priorityLevelSearch = "";
+    this.showAllPriorities();
+  }
 }
-
-
-
-}
+ 
+ 

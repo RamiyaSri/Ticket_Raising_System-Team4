@@ -81,7 +81,11 @@ export class TicketTypeComponent {
         this.ticketType = response;
         this.errMsg = "";
       },
-      error: (err) => this.errMsg = err.error
+      error: err => {
+        this.errMsg =err.error?.errors?Object.values(err.error?.errors || {})
+                          .flat()
+                          .join(', '):err.error;
+      }
     });
   }
  
@@ -121,6 +125,17 @@ export class TicketTypeComponent {
       this.errMsg = err.error || err.message;
     }
   });
+ 
+ 
 }
+goBack() {
+    this.errMsg = "";
+    this.newTicketType();    
+    this.ticketTypes = [];    
+    this.priorityId = "";    
+    this.showAllTicketTypes();
+  }
  
   }
+  
+ 

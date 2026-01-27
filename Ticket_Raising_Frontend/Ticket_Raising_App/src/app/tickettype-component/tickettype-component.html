@@ -48,7 +48,7 @@
               <option value="">-- Select Priority --</option>
               @for (p of priorities; track p.priorityId) {
                 <option [value]="p.priorityId">
-                  {{ p.priorityId }}
+                  {{ p.priorityDescription }}
                 </option>
               }
             </select>
@@ -56,6 +56,10 @@
             <button class="btn btn-primary glow-btn"
                     (click)="showTicketTypesByPriority()">
               Show By Priority
+            </button>
+            <button class="btn btn-secondary glow-btn"
+                    (click)="goBack()">
+                ← Back
             </button>
           </div>
         </div>
@@ -102,3 +106,4 @@
  
   </div>
 </div>
+ 

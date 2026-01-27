@@ -115,6 +115,7 @@ public class EFTicketCommentRepository : ITicketCommentRepository
             ticketComment2Edit.Support_Emp_Id = comment.Support_Emp_Id;
             ticketComment2Edit.CommentText = comment.CommentText;
             ticketComment2Edit.CommentDate = comment.CommentDate;
+            await context.SaveChangesAsync();
         }
         catch(Exception e){
             throw new TicketException($"Error updating comment with ID '{commentId}': {e.Message}",599);

@@ -7,7 +7,7 @@ import { TicketPriority } from '../Models/TicketPriority';
 export class TicketPriorityService {
  
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:5175/api/TicketPriorities/';
+  private readonly baseUrl = 'https://ticketportalapi-grcke7cnhccuc9fd.canadacentral-01.azurewebsites.net/api/TicketPriorities/';
  
   private getAuthHeaders(): HttpHeaders {
     const token = sessionStorage.getItem('token') || '';

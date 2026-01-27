@@ -1,121 +1,108 @@
 <div class="container mt-4">
-<div class="row">
-
-<div class="col-md-5 mb-4">
-<div class="card p-5 shadow-lg text-white border border-light rounded-4"
-           style="background-color: rgba(0, 0, 0, 0.3);">
+  <div class="row">
+ 
+    <div class="col-md-5 mb-4">
+      <div class="card p-5 shadow-lg text-white border border-light rounded-4"
+           style="background-color: rgba(0,0,0,0.3);">
  
         <h2 class="text-glow">Ticket Priority Form</h2>
  
-        <button class="btn btn-secondary mb-3 glow-btn w-100"
-                (click)="newPriority()">New</button>
+        <button class="btn btn-secondary mb-3 w-100" (click)="newPriority()">New</button>
  
         <div class="mb-3">
-<label>Priority ID</label>
-<div class="d-flex gap-2">
-<input type="text"
-                   class="form-control galaxy-input"
-                   [(ngModel)]="priority.priorityId"
-                   name="priorityId" />
-<button class="btn btn-primary glow-btn"
-                    (click)="showPriority()">Show</button>
-</div>
-</div>
+          <label>Priority ID</label>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-control"
+                   [(ngModel)]="priority.priorityId" name="priorityId">
+            <button class="btn btn-primary" (click)="showPriority()">Show</button>
+          </div>
+        </div>
  
         <div class="mb-3">
-<label>Priority Level</label>
-<input type="text"
-                 class="form-control galaxy-input"
-                 [(ngModel)]="priority.priorityLevel"
-                 name="priorityLevel" />
-</div>
+          <label>Priority Level</label>
+          <select class="form-select"
+                  [(ngModel)]="priorityLevel" name="priorityLevel">
+            <option value="">-- Select Priority Level --</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
  
         <div class="mb-3">
-<label>Priority Description</label>
-<input type="text"
-                 class="form-control galaxy-input"
+          <label>Priority Description</label>
+          <input type="text" class="form-control"
                  [(ngModel)]="priority.priorityDescription"
-                 name="priorityDescription" />
-</div>
+                 name="priorityDescription">
+        </div>
  
         <div class="mb-3">
-<label>Response Time (hrs)</label>
-<input type="number"
-                 class="form-control galaxy-input"
+          <label>Response Time (hrs)</label>
+          <input type="number" class="form-control"
                  [(ngModel)]="priority.responseTime"
-                 name="responseTime" />
-</div>
+                 name="responseTime">
+        </div>
  
         <div class="mb-3">
-<label>Resolution Time (hrs)</label>
-<input type="number"
-                 class="form-control galaxy-input"
+          <label>Resolution Time (hrs)</label>
+          <input type="number" class="form-control"
                  [(ngModel)]="priority.resolutionTime"
-                 name="resolutionTime" />
-</div>
+                 name="resolutionTime">
+        </div>
  
-<div class="mb-3">
-  <label>Priority Level</label>
-  <div class="d-flex gap-2">
-    <select
-      class="form-select galaxy-input"
-      [(ngModel)]="priorityLevel"
-      name="priorityLevel">
-      <option value="">-- Select Priority Level --</option>
-      <option value="Low">Low</option>
-      <option value="Medium">Medium</option>
-      <option value="High">High</option>
-    </select>
-
-    <button
-      class="btn btn-primary glow-btn"
-      (click)="showPriorityByLevel()">
-      Search
-    </button>
-  </div>
-</div>
-
-        <div class="mt-3 d-flex gap-2 flex-wrap">
-<button class="btn btn-success glow-btn"
-                  (click)="savePriority()">Add</button>
-<button class="btn btn-warning glow-btn"
-                  (click)="updatePriority()">Update</button>
-<button class="btn btn-danger glow-btn"
-                  (click)="deletePriority()">Delete</button>
-</div>
+        <div class="mb-3">
+          <label>Search by Priority Level</label>
+          <div class="d-flex gap-2">
+            <select class="form-select"
+                    [(ngModel)]="priorityLevelSearch"
+                    name="priorityLevelSearch">
+              <option value="">-- Select Priority Level --</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+            <button class="btn btn-primary" (click)="showPriorityByLevel()">Search</button>
+          </div>
+        </div>
+ 
+        <div class="d-flex gap-2 flex-wrap">
+          <button class="btn btn-success" (click)="savePriority()">Add</button>
+          <button class="btn btn-warning" (click)="updatePriority()">Update</button>
+          <button class="btn btn-danger" (click)="deletePriority()">Delete</button>
+        </div>
  
         <p class="text-danger mt-2">{{ errMsg }}</p>
-</div>
-</div>
-
-<div class="col-md-7 mb-4">
-<div class="card galaxy-card p-4">
-<h2 class="text-glow">List of Ticket Priorities</h2>
+      </div>
+    </div>
  
-        <table class="table table-bordered table-striped galaxy-table mt-3">
-<thead class="table-dark text-glow">
-<tr>
-<th>Priority ID</th>
-<th>Priority Level</th>
-<th>Description</th>
-<th>Response Time</th>
-<th>Resolution Time</th>
-</tr>
-</thead>
-<tbody>
-            @for (p of priorities; track p.priorityId) {
-<tr>
-<td>{{ p.priorityId }}</td>
-<td>{{ p.priorityLevel }}</td>
-<td>{{ p.priorityDescription }}</td>
-<td>{{ p.responseTime }}</td>
-<td>{{ p.resolutionTime }}</td>
-</tr>
-            }
-</tbody>
-</table>
-</div>
-</div>
+    <div class="col-md-7 mb-4">
+      <div class="card p-4">
+        <h2>List of Ticket Priorities</h2>
+ 
+        <button class="btn btn-secondary mb-3" (click)="goBack()">← Back</button>
+ 
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Level</th>
+              <th>Description</th>
+              <th>Response Time</th>
+              <th>Resolution Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of priorities">
+              <td>{{ p.priorityId }}</td>
+              <td>{{ p.priorityLevel }}</td>
+              <td>{{ p.priorityDescription }}</td>
+              <td>{{ p.responseTime }}</td>
+              <td>{{ p.resolutionTime }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
  
   </div>
 </div>
