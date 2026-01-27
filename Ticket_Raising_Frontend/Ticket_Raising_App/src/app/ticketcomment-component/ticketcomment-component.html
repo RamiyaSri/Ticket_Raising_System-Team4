@@ -2,11 +2,126 @@
   <div class="row">
 
     <!-- COMMENT FORM (LEFT) -->
+    @if(showTicketForm){
+      <div class="col-md-5 mb-4">
+        <div class="card p-5 shadow-lg text-white border border-light rounded-4"
+            style="background-color: rgba(0, 0, 0, 0.3);">
+
+          <h2 class="text-glow">Comment Form</h2>
+
+          <button class="btn btn-secondary mb-3 glow-btn w-100"
+                  (click)="newComment()">New</button>
+
+          <!-- Comment ID -->
+          <div class="mb-3">
+            <label>Comment ID</label>
+            <input type="text"
+                  class="form-control galaxy-input"
+                  [(ngModel)]="ticketComment.commentId">
+          </div>
+
+          <!-- Ticket ID -->
+          <div class="mb-3">
+            <label>Ticket</label>
+            <div class="d-flex gap-2">
+              <select class="form-select galaxy-input" [(ngModel)]="ticketComment.ticketId" name="ticketId" (ngModelChange)="onChange($event,false)">
+                <option value="">-- Select Ticket --</option>
+                <option *ngFor="let e of tickets" [value]="e.ticketId">{{ e.ticketId }} </option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Comment -->
+          <div class="mb-3">
+            <label>Comment</label>
+            <textarea class="form-control galaxy-input"
+                      rows="3"
+                      [(ngModel)]="ticketComment.commentText"></textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-3 d-flex gap-2 flex-wrap">
+            <button class="btn btn-success glow-btn"
+                    (click)="saveComment()">Add</button>
+            <button class="btn btn-warning glow-btn"
+                    (click)="updateComment(ticketComment,ticketComment.commentId)">Update</button>
+            <button class="btn btn-danger glow-btn"
+                    (click)="deleteComment(ticketComment.commentId)">Delete</button>
+            <button class="btn btn-danger glow-btn"
+                    (click)="OnCancelAddComment()">Cancel</button>
+          </div>
+
+          <p class="text-danger mt-2 fw-bold fs-4">{{ errMsg }}</p>
+        </div>
+      </div>
+  }
+
+    <!-- COMMENT LIST (RIGHT) -->
+    <div class="col-md-7 mb-4">
+      <div class="card galaxy-card p-4">
+        <h2 class="text-glow">Comments from my tickets</h2>
+
+        <div class="table-responsive galaxy-table-wrapper">
+              @for (c of myticketComments; track c.commentId) {
+                @if ( curUser !== null && curUser === c.empId) {
+                  <div style="background-color: bisque;" class="text-end">
+                    <div>
+                        <span class="fs-6"> {{c.commentId}} </span>
+                        <span class="fs-6"> {{c.empId}} </span>
+                        <span class="fs-6"> {{c.ticketId}} </span>
+                        <span class="fs-6"> {{c.commentDate | date:'HH:mm'}} </span>
+                        <p class="fs-5">{{c.commentText}}</p>
+                    </div>
+                  
+                  </div>
+                }
+                @else{
+                  <div style="background-color: bisque;" class="text-start">
+                    <div>
+                        <span class="fs-6"> {{c.commentId}} </span>
+                        <span class="fs-6"> {{c.empId}} </span>
+                        <span class="fs-6"> {{c.ticketId}} </span>
+                        <span class="fs-6"> {{c.commentDate | date:'HH:mm'}} </span>
+                        <p class="fs-5">{{c.commentText}}</p>
+                    </div>
+                  
+                  </div>
+                }
+              }
+              @empty {
+                <div style="background-color: bisque;" class="text-start">
+                    <div>
+                        <p class="fs-5">No Comments Found</p>
+                    </div>
+                  
+                  </div>
+              }
+              
+        </div>
+
+      <div class="row">
+        <div class="col-6">
+            <button class="btn btn-success glow-btn" (click)="OnShowAddComment()">
+                Add Comment for your ticket
+            </button>
+        </div>
+
+        <div class="col-6">
+          <button class="btn btn-success glow-btn" (click)="OnShowReplyComment()">
+            Reply for Comment other's comment
+          </button>
+        </div>
+      </div>
+        
+    </div>
+    </div>
+
+    @if (showReplyForm){
     <div class="col-md-5 mb-4">
       <div class="card p-5 shadow-lg text-white border border-light rounded-4"
            style="background-color: rgba(0, 0, 0, 0.3);">
 
-        <h2 class="text-glow">Ticket Comment Form</h2>
+        <h2 class="text-glow">Reply Form</h2>
 
         <button class="btn btn-secondary mb-3 glow-btn w-100"
                 (click)="newComment()">New</button>
@@ -16,103 +131,44 @@
           <label>Comment ID</label>
           <input type="text"
                  class="form-control galaxy-input"
-                 [(ngModel)]="ticketComment.commentId">
+                 [(ngModel)]="replyComment.commentId">
         </div>
 
         <!-- Ticket ID -->
         <div class="mb-3">
-          <label>Ticket ID</label>
+          <label>Ticket</label>
           <div class="d-flex gap-2">
-            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.ticketId" name="ticketId">
-              <option value="">-- Select Ticket Id --</option>
-              <option *ngFor="let e of tickets" [value]="e.ticketId">{{ e.ticketId }} </option>
+            <select class="form-select galaxy-input" [(ngModel)]="replyComment.ticketId" name="ticketId" (ngModelChange)="onChange($event,true)">
+              <option value="">-- Select Ticket --</option>
+              <option *ngFor="let e of assignedTickets" [value]="e.ticketId">{{ e.ticketId }} </option>
             </select>
             <button class="btn btn-primary glow-btn"
                     (click)="showCommentsByTicket()">Search</button>
           </div>
         </div>
-
-
-        <div class="mb-3">
-          <label>Employee ID</label>
-          <div class="d-flex gap-2">
-            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.empId" name="empId">
-              <option value="">-- Select Employee --</option>
-              <option *ngFor="let e of userEmp" [value]="e.empId">{{ e.empId }} </option>
-            </select>
-            <button class="btn btn-primary glow-btn" (click)="showCommentsByEmployee()">Search</button>
-          </div>
-        </div>
-
-        <!-- Support Employee -->
-        <div class="mb-3">
-          <label>Support Employee ID</label>
-          <div class="d-flex gap-2">
-            <select class="form-select galaxy-input" [(ngModel)]="ticketComment.support_Emp_Id" name="support_Emp_Id">
-              <option value="">-- Select Employee --</option>
-              <option *ngFor="let e of SupportEmp" [value]="e.empId">{{ e.empId }} </option>
-            </select>
-            <button class="btn btn-primary glow-btn"
-                    (click)="showCommentsBySupportEmployee()">Search</button>
-          </div>
-        </div>
-
         <!-- Comment -->
         <div class="mb-3">
           <label>Comment</label>
           <textarea class="form-control galaxy-input"
                     rows="3"
-                    [(ngModel)]="ticketComment.commentText"></textarea>
+                    [(ngModel)]="replyComment.commentText"></textarea>
         </div>
 
         <!-- Action Buttons -->
         <div class="mt-3 d-flex gap-2 flex-wrap">
           <button class="btn btn-success glow-btn"
-                  (click)="saveComment()">Add</button>
+                  (click)="replyForAComment()">Add</button>
           <button class="btn btn-warning glow-btn"
-                  (click)="updateComment()">Update</button>
+                  (click)="updateComment(replyComment,replyComment.commentId)">Update</button>
           <button class="btn btn-danger glow-btn"
-                  (click)="deleteComment()">Delete</button>
-        </div>
+                  (click)="deleteComment(replyComment.commentId)">Delete</button>
+          <button class="btn btn-danger glow-btn"
+                    (click)="OnCancelReplyComment()">Cancel</button>
+              </div>
 
-        <p class="text-danger mt-2">{{ errMsg }}</p>
+        <p class="text-danger mt-2 fw-bold fs-4">{{ errMsg }}</p>
       </div>
     </div>
-
-    <!-- COMMENT LIST (RIGHT) -->
-    <div class="col-md-7 mb-4">
-      <div class="card galaxy-card p-4">
-        <h2 class="text-glow">List of Comments</h2>
-
-        <div class="table-responsive galaxy-table-wrapper">
-          <table class="table table-bordered table-striped galaxy-table mt-3">
-            <thead class="table-dark text-glow">
-              <tr>
-                <th>Comment ID</th>
-                <th>Ticket ID</th>
-                <th>Employee</th>
-                <th>Support</th>
-                <th>Comment</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (c of ticketComments; track c.commentId) {
-                <tr>
-                  <td>{{ c.commentId }}</td>
-                  <td>{{ c.ticketId }}</td>
-                  <td>{{ c.empId }}</td>
-                  <td>{{ c.support_Emp_Id }}</td>
-                  <td>{{ c.commentText }}</td>
-                  <td>{{ c.commentDate | date:'short' }}</td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-
-      </div>
-    </div>
-
+  }
   </div>
 </div>

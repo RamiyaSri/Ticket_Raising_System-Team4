@@ -1,18 +1,18 @@
 <div class="galaxy-background">
   <div class="container mt-5">
     <div class="row">
-
+ 
       <!-- EMPLOYEE MANAGEMENT FORM (LEFT) -->
       @if ((userName && role == "Admin") || ToEdit) {
         <div class="col-md-5 mb-4">
           <div class="card p-5 shadow-lg text-white border border-light rounded-4"
                style="background-color: rgba(0, 0, 0, 0.3);">
-
+ 
             <h2 class="text-glow">Employee Management</h2>
-
+ 
             <button class="btn btn-secondary mb-3 glow-btn w-100"
                     (click)="newEmployee()">New</button>
-
+ 
             <!-- Employee ID -->
             <div class="mb-3">
               <label>Employee ID</label>
@@ -25,7 +25,7 @@
                         (click)="showEmployee()">Show</button>
               </div>
             </div>
-
+ 
             <!-- First Name -->
             <div class="mb-3">
               <label>First Name</label>
@@ -34,7 +34,7 @@
                      [(ngModel)]="employee.firstName"
                      name="firstName" />
             </div>
-
+ 
             <!-- Last Name -->
             <div class="mb-3">
               <label>Last Name</label>
@@ -43,7 +43,7 @@
                      [(ngModel)]="employee.lastName"
                      name="lastName" />
             </div>
-
+ 
             <!-- Email -->
             <div class="mb-3">
               <label>Email</label>
@@ -52,7 +52,7 @@
                      [(ngModel)]="employee.email"
                      name="email" />
             </div>
-
+ 
             <!-- Phone -->
             <div class="mb-3">
               <label>Phone Number</label>
@@ -61,16 +61,16 @@
                      [(ngModel)]="employee.phoneNumber"
                      name="phoneNumber" />
             </div>
-
+ 
             <!-- Password -->
             <div class="mb-3">
               <label>Password</label>
-              <input type="text"
+              <input type="password"
                      class="form-control galaxy-input"
                      [(ngModel)]="employee.password"
                      name="password" />
             </div>
-
+ 
             <!-- Actions -->
             <div class="mt-3 d-flex gap-2 flex-wrap">
               <button class="btn btn-warning glow-btn"
@@ -81,21 +81,21 @@
                       <button class="btn btn-danger glow-btn"
                       (click)="deleteEmployee()">Delete</button>
               }
-              
+             
             </div>
-
+ 
             <p class="text-danger mt-2">{{ errMsg }}</p>
-
+ 
           </div>
         </div>
       }
-
+ 
       <!-- LIST OF EMPLOYEES (RIGHT) -->
       <div class="col-md-7 mb-4">
         <div class="card galaxy-card p-4">
-
+ 
           <h2 class="text-glow">Employee Details</h2>
-
+ 
           <!-- TABLE WRAPPER (FIXES OVERFLOW) -->
           <div class="table-responsive galaxy-table-wrapper">
             <table class="table table-bordered table-striped galaxy-table mt-3">
@@ -108,7 +108,9 @@
                   <th>Role</th>
                   <th>Password</th>
                   <th>Phone</th>
-                  <th>Edit </th>  
+                  @if (role != 'Admin') {
+                    <th>Edit</th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -121,19 +123,21 @@
                     <td>{{ e.role }}</td>
                     <td>{{ e.password }}</td>
                     <td>{{ e.phoneNumber }}</td>
+                    @if (role != 'Admin') {
                     <td>
                       <button class="btn btn-info glow-btn"
                               (click)="UpdateUserDetails()">Edit</button>
                     </td>
+                  }
                   </tr>
                 }
               </tbody>
             </table>
           </div>
-
+ 
         </div>
       </div>
-
+ 
     </div>
   </div>
 </div>

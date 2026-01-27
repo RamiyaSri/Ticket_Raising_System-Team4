@@ -11,7 +11,7 @@ import { LogoutComponent } from './logout-component/logout-component';
 import { HomeComponent } from './home-component/home-component';
 import { userAccessGuard } from './user-access-guard';
 export const routes: Routes = [
-    {path: 'ticket', component: TicketComponent,canActivate:[userAccessGuard]},
+    {path: 'ticket', component: TicketComponent },
     {path: 'tickettype', component: TicketTypeComponent,canActivate:[userAccessGuard]},
     {path: 'ticketpriority', component: TicketPriorityComponent,canActivate:[userAccessGuard]},
     {path: 'employee', component: EmployeeComponent,canActivate:[userAccessGuard]},

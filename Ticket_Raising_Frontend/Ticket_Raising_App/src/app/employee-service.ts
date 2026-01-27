@@ -20,7 +20,7 @@ export class EmployeeService {
 
   token: string | null;
 
-  baseUrl: string = 'http://localhost:5175/api/Employees/'; 
+  baseUrl: string = 'https://ticketportalapi-grcke7cnhccuc9fd.canadacentral-01.azurewebsites.net/api/Employees/'; 
 
   // change port if needed
  

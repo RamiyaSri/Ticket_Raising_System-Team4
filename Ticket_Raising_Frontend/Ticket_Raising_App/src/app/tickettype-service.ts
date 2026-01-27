@@ -11,7 +11,7 @@ export class TicketTypeService {
   http: HttpClient = inject(HttpClient);
   httpOptions;
   token;
-  baseUrl: string = "http://localhost:5175/api/TicketTypes/";   
+  baseUrl: string = "https://ticketportalapi-grcke7cnhccuc9fd.canadacentral-01.azurewebsites.net/api/TicketTypes/";   
  
   constructor() {
     this.token = sessionStorage.getItem("token");

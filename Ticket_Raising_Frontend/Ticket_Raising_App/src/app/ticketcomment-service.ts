@@ -7,7 +7,7 @@ import { TicketComment } from '../Models/TicketComment';
 export class TicketCommentService {
  
   private http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:5175/';
+  private readonly baseUrl = 'https://ticketportalapi-grcke7cnhccuc9fd.canadacentral-01.azurewebsites.net/';
  
   private getAuthHeaders(): HttpHeaders {
     const token = sessionStorage.getItem('token') || '';
@@ -49,7 +49,7 @@ export class TicketCommentService {
  
   deleteComment(commentId: string): Observable<any> {
     return this.http.delete<any>(
-      this.baseUrl + "  api/TicketComments/" + encodeURIComponent(commentId),
+      this.baseUrl + "api/TicketComments/" + encodeURIComponent(commentId),
       { headers: this.getAuthHeaders() }
     );
   }
